@@ -1,5 +1,6 @@
 @use "themes/tokyo-night" as *;
 @use "widgets/bar/bar";
+@use "widgets/controlcenter/controlcenter";
 
 window {
   background-color: transparent;

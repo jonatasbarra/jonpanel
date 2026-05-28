@@ -1,0 +1,18 @@
+@use "../../themes/tokyo-night" as *;
+
+.control-center {
+  background-color: transparent;
+}
+
+.cc-container {
+  background-color: $blur-bg;
+  border: 1px solid $border;
+  border-radius: 12px;
+  padding: 16px;
+  margin: 8px;
+}
+
+.cc-placeholder {
+  color: $fg-muted;
+  font-size: 13px;
+}

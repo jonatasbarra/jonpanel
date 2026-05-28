@@ -17,6 +17,13 @@
 
 .clock {
   padding: 0 8px;
+  background-color: transparent;
+  border: none;
+  border-radius: 6px;
+
+  &:hover {
+    background-color: rgba($fg, 0.08);
+  }
 
   .clock-time {
     color: $fg;
@@ -112,6 +119,36 @@
   }
 }
 
+.volume {
+  padding: 0 4px;
+
+  .volume-icon {
+    color: $cyan;
+    font-size: 14px;
+  }
+
+  .volume-label {
+    color: $fg;
+    font-size: 12px;
+  }
+}
+
+.tray {
+  padding: 0 4px;
+
+  .tray-item {
+    background-color: transparent;
+    border: none;
+    border-radius: 4px;
+    padding: 2px 4px;
+    min-width: 0;
+
+    &:hover {
+      background-color: rgba($fg, 0.08);
+    }
+  }
+}
+
 .powermenu {
   color: $red;
   font-size: 14px;
@@ -120,6 +157,6 @@
   background-color: transparent;
 
   &:hover {
-    background-color: rgba(247, 118, 142, 0.15);
+    background-color: rgba($red, 0.15);
   }
 }

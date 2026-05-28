@@ -7,6 +7,8 @@ import BatteryModule from "./modules/Battery"
 import NetworkModule from "./modules/Network"
 import BluetoothModule from "./modules/Bluetooth"
 import Media from "./modules/Media"
+import Volume from "./modules/Volume"
+import Tray from "./modules/Tray"
 import Powermenu from "./modules/Powermenu"
 
 const Left = () => (
@@ -23,10 +25,12 @@ const Center = () => (
 
 const Right = () => (
   <box cssClasses={["bar-right"]} halign={Gtk.Align.END} hexpand spacing={8}>
+    <Tray />
     <Media />
     <BluetoothModule />
     <NetworkModule />
     <BatteryModule />
+    <Volume />
     <Clock />
     <Powermenu />
   </box>
