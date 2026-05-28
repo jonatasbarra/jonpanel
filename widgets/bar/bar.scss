@@ -52,3 +52,48 @@
     }
   }
 }
+
+.battery {
+  padding: 0 4px;
+
+  .battery-icon {
+    color: $fg;
+    font-size: 14px;
+
+    &.charging {
+      color: $green;
+    }
+  }
+
+  .battery-label {
+    color: $fg;
+    font-size: 12px;
+  }
+}
+
+.network {
+  padding: 0 4px;
+
+  .network-icon {
+    color: $blue;
+    font-size: 14px;
+  }
+
+  .network-label {
+    color: $fg;
+    font-size: 12px;
+  }
+}
+
+.bluetooth {
+  font-size: 14px;
+  padding: 0 4px;
+
+  &.enabled {
+    color: $blue;
+  }
+
+  &.disabled {
+    color: $fg-muted;
+  }
+}

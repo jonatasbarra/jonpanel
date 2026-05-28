@@ -3,6 +3,9 @@ import { Astal, Gtk, Gdk } from "ags/gtk4"
 import Clock from "./modules/Clock"
 import ActiveWindow from "./modules/ActiveWindow"
 import Workspaces from "./modules/Workspaces"
+import BatteryModule from "./modules/Battery"
+import NetworkModule from "./modules/Network"
+import BluetoothModule from "./modules/Bluetooth"
 
 const Left = () => (
   <box cssClasses={["bar-left"]} halign={Gtk.Align.START} hexpand spacing={8}>
@@ -18,6 +21,9 @@ const Center = () => (
 
 const Right = () => (
   <box cssClasses={["bar-right"]} halign={Gtk.Align.END} hexpand spacing={8}>
+    <BluetoothModule />
+    <NetworkModule />
+    <BatteryModule />
     <Clock />
   </box>
 )
