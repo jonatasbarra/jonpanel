@@ -1,0 +1,16 @@
+@use "../../themes/tokyo-night" as *;
+
+.bar {
+  background-color: $blur-bg;
+  border-bottom: 1px solid $border;
+  padding: 0 8px;
+  font-family: "JetBrainsMono Nerd Font";
+  font-size: 13px;
+  color: $fg;
+}
+
+.bar-left,
+.bar-center,
+.bar-right {
+  padding: 0 4px;
+}
