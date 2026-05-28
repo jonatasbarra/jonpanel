@@ -97,3 +97,17 @@
     color: $fg-muted;
   }
 }
+
+.media {
+  padding: 0 4px;
+
+  .media-icon {
+    color: $purple;
+    font-size: 13px;
+  }
+
+  .media-title {
+    color: $fg-muted;
+    font-size: 12px;
+  }
+}
