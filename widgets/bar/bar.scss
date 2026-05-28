@@ -14,3 +14,41 @@
 .bar-right {
   padding: 0 4px;
 }
+
+.clock {
+  padding: 0 8px;
+
+  .clock-time {
+    color: $fg;
+    font-weight: bold;
+  }
+
+  .clock-date {
+    color: $fg-muted;
+  }
+}
+
+.active-window {
+  color: $fg-muted;
+  font-size: 12px;
+}
+
+.workspaces {
+  padding: 0 4px;
+
+  .workspace {
+    min-width: 24px;
+    min-height: 24px;
+    border-radius: 6px;
+    background-color: $surface;
+    color: $fg-muted;
+    border: 1px solid transparent;
+    font-size: 11px;
+
+    &.active {
+      background-color: $blue;
+      color: $bg;
+      border-color: $border;
+    }
+  }
+}
