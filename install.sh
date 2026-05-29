@@ -66,22 +66,7 @@ AUR_DEPS=(
 
 "$AUR_HELPER" -S --needed --noconfirm "${AUR_DEPS[@]}"
 
-# ── 5. pnpm ───────────────────────────────────────────────────────────────────
-
-echo ""
-echo "==> Checking pnpm..."
-
-command -v pnpm &>/dev/null || npm install -g pnpm
-
-# ── 6. Install JS dependencies ────────────────────────────────────────────────
-
-echo ""
-echo "==> Installing JS dependencies..."
-
-cd "$SCRIPT_DIR"
-pnpm install --prefer-offline
-
-# ── 7. Compile SCSS ───────────────────────────────────────────────────────────
+# ── 5. Compile SCSS ───────────────────────────────────────────────────────────
 
 echo ""
 echo "==> Compiling SCSS..."
