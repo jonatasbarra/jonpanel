@@ -1,0 +1,14 @@
+@use "../../themes/tokyo-night" as *;
+
+.notifications-window {
+  background-color: transparent;
+}
+
+.notif-popup-list {
+  background-color: transparent;
+}
+
+// Extra elevation for floating popups on top of base .notif-card styles
+.notif-popup {
+  box-shadow: 0 4px 20px rgba($bg-alt, 0.8);
+}
