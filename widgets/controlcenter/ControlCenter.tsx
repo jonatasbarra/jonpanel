@@ -3,6 +3,7 @@ import { Astal, Gtk } from "ags/gtk4"
 import { getCCVisible } from "../../services/controlcenter"
 import VolumeSlider from "./components/VolumeSlider"
 import BrightnessSlider from "./components/BrightnessSlider"
+import QuickToggles from "./components/QuickToggles"
 
 export default function ControlCenter() {
   const { TOP, RIGHT } = Astal.WindowAnchor
@@ -25,6 +26,7 @@ export default function ControlCenter() {
       >
         <VolumeSlider />
         <BrightnessSlider />
+        <QuickToggles />
       </box>
     </window>
   )

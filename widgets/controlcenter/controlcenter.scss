@@ -32,6 +32,39 @@
   }
 }
 
+.quick-toggles {
+  padding: 4px 0;
+
+  .qt-toggle {
+    background-color: $surface;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    padding: 12px 8px;
+
+    &:hover {
+      border-color: $border;
+    }
+
+    &:active {
+      background-color: $bg-alt;
+    }
+  }
+
+  .qt-icon {
+    font-size: 20px;
+    color: $fg-muted;
+
+    &.active {
+      color: $blue;
+    }
+  }
+
+  .qt-label {
+    font-size: 11px;
+    color: $fg-muted;
+  }
+}
+
 .brightness-slider {
   padding: 4px 0;
 
