@@ -1,5 +1,13 @@
 @use "../../themes/tokyo-night" as *;
 
+// Shared pill style for all right-side status modules
+@mixin status-pill {
+  background-color: $surface;
+  border: 1px solid $border;
+  border-radius: 8px;
+  padding: 2px 10px;
+}
+
 .bar {
   background-color: $blur-bg;
   border-bottom: 1px solid $border;
@@ -16,10 +24,9 @@
 }
 
 .clock {
-  padding: 0 8px;
-  background-color: transparent;
+  @include status-pill;
   border: none;
-  border-radius: 6px;
+  background-color: transparent;
 
   &:hover {
     background-color: rgba($fg, 0.08);
@@ -63,7 +70,8 @@
 }
 
 .battery {
-  padding: 0 4px;
+  @include status-pill;
+  spacing: 4px;
 
   .battery-icon {
     color: $fg;
@@ -72,31 +80,40 @@
     &.charging {
       color: $green;
     }
+
+    &.low {
+      color: $red;
+    }
   }
 
   .battery-label {
-    color: $fg;
+    color: $fg-muted;
     font-size: 12px;
   }
 }
 
 .network {
-  padding: 0 4px;
+  @include status-pill;
+  spacing: 4px;
 
   .network-icon {
     color: $blue;
     font-size: 16px;
+
+    &.disconnected {
+      color: $fg-muted;
+    }
   }
 
   .network-label {
-    color: $fg;
+    color: $fg-muted;
     font-size: 12px;
   }
 }
 
 .bluetooth {
+  @include status-pill;
   font-size: 16px;
-  padding: 0 4px;
 
   &.enabled {
     color: $blue;
@@ -108,7 +125,8 @@
 }
 
 .media {
-  padding: 0 4px;
+  @include status-pill;
+  spacing: 4px;
 
   .media-icon {
     color: $purple;
@@ -122,15 +140,20 @@
 }
 
 .volume {
-  padding: 0 4px;
+  @include status-pill;
+  spacing: 4px;
 
   .volume-icon {
     color: $cyan;
     font-size: 16px;
+
+    &.muted {
+      color: $fg-muted;
+    }
   }
 
   .volume-label {
-    color: $fg;
+    color: $fg-muted;
     font-size: 12px;
   }
 }
@@ -152,13 +175,13 @@
 }
 
 .powermenu {
+  @include status-pill;
   color: $red;
   font-size: 16px;
-  padding: 0 4px;
-  border-radius: 6px;
-  background-color: transparent;
+  border-color: rgba($red, 0.3);
+  background-color: rgba($red, 0.08);
 
   &:hover {
-    background-color: rgba($red, 0.15);
+    background-color: rgba($red, 0.2);
   }
 }

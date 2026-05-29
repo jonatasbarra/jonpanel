@@ -49,7 +49,12 @@ export default function Volume() {
 
   return (
     <box cssClasses={["volume"]} spacing={4}>
-      <label cssClasses={["volume-icon"]} label={icon} />
+      <label
+        cssClasses={muted.as((m: boolean) =>
+          m ? ["volume-icon", "muted"] : ["volume-icon"]
+        )}
+        label={icon}
+      />
       <label cssClasses={["volume-label"]} label={label} />
     </box>
   )
