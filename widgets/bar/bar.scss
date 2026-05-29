@@ -27,11 +27,13 @@
 
   .clock-time {
     color: $fg;
+    font-size: 12px;
     font-weight: bold;
   }
 
   .clock-date {
     color: $fg-muted;
+    font-size: 12px;
   }
 }
 
@@ -65,7 +67,7 @@
 
   .battery-icon {
     color: $fg;
-    font-size: 14px;
+    font-size: 16px;
 
     &.charging {
       color: $green;
@@ -83,7 +85,7 @@
 
   .network-icon {
     color: $blue;
-    font-size: 14px;
+    font-size: 16px;
   }
 
   .network-label {
@@ -93,7 +95,7 @@
 }
 
 .bluetooth {
-  font-size: 14px;
+  font-size: 16px;
   padding: 0 4px;
 
   &.enabled {
@@ -110,7 +112,7 @@
 
   .media-icon {
     color: $purple;
-    font-size: 13px;
+    font-size: 16px;
   }
 
   .media-title {
@@ -124,7 +126,7 @@
 
   .volume-icon {
     color: $cyan;
-    font-size: 14px;
+    font-size: 16px;
   }
 
   .volume-label {
@@ -151,8 +153,8 @@
 
 .powermenu {
   color: $red;
-  font-size: 14px;
-  padding: 0 6px;
+  font-size: 16px;
+  padding: 0 4px;
   border-radius: 6px;
   background-color: transparent;
 
