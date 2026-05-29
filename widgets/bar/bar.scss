@@ -86,7 +86,7 @@
 
   .battery-icon {
     color: $fg;
-    font-size: 18px;
+    font-size: 20px;
 
     &.charging { color: $green; }
     &.low      { color: $red; }
@@ -98,7 +98,7 @@
 
   .network-icon {
     color: $blue;
-    font-size: 18px;
+    font-size: 20px;
 
     &.disconnected { color: $fg-muted; }
   }
@@ -106,7 +106,7 @@
 
 .bluetooth {
   @include icon-button;
-  font-size: 18px;
+  font-size: 20px;
 
   &.enabled  { color: $blue; }
   &.disabled { color: $fg-muted; }
@@ -117,7 +117,7 @@
 
   .media-icon {
     color: $purple;
-    font-size: 18px;
+    font-size: 20px;
   }
 }
 
@@ -126,7 +126,7 @@
 
   .volume-icon {
     color: $cyan;
-    font-size: 18px;
+    font-size: 20px;
 
     &.muted { color: $fg-muted; }
   }
@@ -151,7 +151,7 @@
 .powermenu {
   @include icon-button;
   color: $red;
-  font-size: 18px;
+  font-size: 20px;
 
   &:hover {
     background-color: rgba($red, 0.15);
