@@ -1,5 +1,5 @@
 import app from "ags/gtk4/app"
-import { Astal, Gtk } from "ags/gtk4"
+import { Astal, Gtk, Gdk } from "ags/gtk4"
 import { createBinding, For } from "ags"
 import Network from "gi://AstalNetwork"
 import { getWifiMenuVisible, closeWifiMenu } from "../../services/wifimenu"
@@ -27,7 +27,7 @@ function ApRow({ ap, wifi }: { ap: Network.AccessPoint; wifi: Network.Wifi }) {
         closeWifiMenu()
       }}
     >
-      <box spacing={10}>
+      <box spacing={10} orientation={Gtk.Orientation.HORIZONTAL}>
         <label cssClasses={["ap-icon"]} label={signalIcon(ap.strength)} />
         <label
           cssClasses={["ap-ssid"]}
@@ -84,7 +84,7 @@ export default function WifiMenu() {
       visible={getWifiMenuVisible}
       application={app}
     >
-      <box vertical spacing={4}>
+      <box orientation={Gtk.Orientation.VERTICAL} spacing={4}>
         <label cssClasses={["menu-header"]} label="Wi-Fi" halign={Gtk.Align.START} />
         <For each={sortedAPs}>
           {(ap: Network.AccessPoint) => <ApRow ap={ap} wifi={wifi} />}

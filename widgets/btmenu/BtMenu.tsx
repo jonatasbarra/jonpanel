@@ -29,7 +29,7 @@ function DeviceRow({ device }: { device: Bluetooth.Device }) {
         closeBtMenu()
       }}
     >
-      <box spacing={10}>
+      <box spacing={10} orientation={Gtk.Orientation.HORIZONTAL}>
         <label cssClasses={["device-icon"]} label="󰂯" />
         <label
           cssClasses={["device-name"]}
@@ -78,7 +78,7 @@ export default function BtMenu() {
       visible={getBtMenuVisible}
       application={app}
     >
-      <box vertical spacing={4}>
+      <box orientation={Gtk.Orientation.VERTICAL} spacing={4}>
         <label
           cssClasses={["menu-header"]}
           label="Bluetooth"
