@@ -2,15 +2,24 @@ import { createComputed } from "ags"
 import { createPoll } from "ags/time"
 import { execAsync } from "ags/process"
 import { Astal } from "ags/gtk4"
+import { showOSD } from "../../../services/osd"
 
 export default function BrightnessSlider() {
   const currentRaw = createPoll("0", 500, "brightnessctl g")
   const maxRaw = createPoll("1", 500, "brightnessctl m")
 
+  let lastPercent = -1
   const percent = createComputed(() => {
     const cur = parseInt(currentRaw()) || 0
     const max = parseInt(maxRaw()) || 1
-    return Math.round((cur / max) * 100)
+    const p = Math.round((cur / max) * 100)
+    // Keyboard keys: value changed externally (not via slider drag)
+    if (lastPercent !== -1 && p !== lastPercent && p !== lastWritten) {
+      console.log("[OSD] brightness poll changed →", p)
+      showOSD("brightness", p)
+    }
+    lastPercent = p
+    return p
   })
 
   const icon = createComputed(() => {
@@ -22,7 +31,7 @@ export default function BrightnessSlider() {
 
   const labelText = createComputed(() => `${percent()}%`)
 
-  // Avoid feedback loop: skip brightnessctl if value matches what we last wrote
+  // Tracks last value written by slider to deduplicate OSD triggers from the poll
   let lastWritten = -1
 
   function handleChange(self: Astal.Slider) {
@@ -30,6 +39,7 @@ export default function BrightnessSlider() {
     if (v === lastWritten) return
     lastWritten = v
     execAsync(["brightnessctl", "s", `${v}%`]).catch(console.error)
+    showOSD("brightness", v)
   }
 
   return (
