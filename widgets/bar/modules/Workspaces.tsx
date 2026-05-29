@@ -11,16 +11,22 @@ export default function Workspaces() {
   )
 
   return (
-    <box cssClasses={["workspaces"]} spacing={6}>
+    <box cssClasses={["workspaces"]} spacing={4}>
       <For each={sorted}>
         {(ws: Hyprland.Workspace) => (
           <button
-            cssClasses={focusedWorkspace.as((fw: Hyprland.Workspace | null) =>
-              fw?.id === ws.id ? ["workspace", "active"] : ["workspace"]
-            )}
+            cssClasses={["workspace"]}
             onClicked={() => hyprland.dispatch("workspace", `${ws.id}`)}
             tooltipText={`Workspace ${ws.id}`}
-          />
+          >
+            <box
+              cssClasses={focusedWorkspace.as((fw: Hyprland.Workspace | null) =>
+                fw?.id === ws.id
+                  ? ["workspace-dot", "active"]
+                  : ["workspace-dot"]
+              )}
+            />
+          </button>
         )}
       </For>
     </box>

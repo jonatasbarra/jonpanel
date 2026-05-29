@@ -60,21 +60,25 @@
   padding: 0 4px;
 
   .workspace {
-    min-width: 10px;
-    min-height: 10px;
-    border-radius: 50%;
     background-color: transparent;
-    border: 2px solid rgba($fg, 0.35);
-    padding: 0;
+    border: none;
+    padding: 2px 3px;
 
-    &:hover {
-      border-color: rgba($fg, 0.7);
+    &:hover .workspace-dot {
+      background-color: rgba($fg, 0.5);
     }
 
-    &.active {
-      background-color: $blue;
-      border-color: $blue;
-      min-width: 22px;
+    .workspace-dot {
+      min-width: 8px;
+      min-height: 8px;
+      border-radius: 50%;
+      background-color: rgba($fg, 0.25);
+
+      &.active {
+        background-color: $blue;
+        min-width: 20px;
+        border-radius: 4px;
+      }
     }
   }
 }
