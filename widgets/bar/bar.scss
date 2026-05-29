@@ -1,14 +1,14 @@
 @use "../../themes/tokyo-night" as *;
 
-// Shared pill style for all right-side status modules (applied to <button>)
-@mixin status-pill {
-  background-color: $surface;
-  border: 1px solid rgba($blue, 0.2);
-  border-radius: 8px;
-  padding: 2px 8px;
+// Bare icon button — transparent, no border, hover only
+@mixin icon-button {
+  background-color: transparent;
+  border: none;
+  border-radius: 6px;
+  padding: 0 6px;
 
   &:hover {
-    background-color: rgba($fg, 0.06);
+    background-color: rgba($fg, 0.08);
   }
 }
 
@@ -28,10 +28,8 @@
 }
 
 .clock {
-  background-color: transparent;
-  border: none;
-  border-radius: 6px;
-  padding: 0 8px;
+  @include icon-button;
+  padding: 0 10px;
 
   &:hover {
     background-color: rgba($fg, 0.08);
@@ -62,10 +60,10 @@
   .workspace {
     background-color: transparent;
     border: none;
-    padding: 2px 3px;
+    padding: 2px 4px;
 
     &:hover .workspace-dot {
-      background-color: rgba($fg, 0.5);
+      background-color: rgba($fg, 0.55);
     }
 
     .workspace-dot {
@@ -84,77 +82,53 @@
 }
 
 .battery {
-  @include status-pill;
-  border-color: rgba($green, 0.25);
+  @include icon-button;
 
   .battery-icon {
     color: $fg;
-    font-size: 16px;
+    font-size: 18px;
 
-    &.charging {
-      color: $green;
-    }
-
-    &.low {
-      color: $red;
-    }
+    &.charging { color: $green; }
+    &.low      { color: $red; }
   }
 }
 
 .network {
-  @include status-pill;
-  border-color: rgba($blue, 0.25);
+  @include icon-button;
 
   .network-icon {
     color: $blue;
-    font-size: 16px;
+    font-size: 18px;
 
-    &.disconnected {
-      color: $fg-muted;
-    }
+    &.disconnected { color: $fg-muted; }
   }
 }
 
 .bluetooth {
-  @include status-pill;
-  border-color: rgba($blue, 0.25);
-  font-size: 16px;
+  @include icon-button;
+  font-size: 18px;
 
-  &.enabled {
-    color: $blue;
-  }
-
-  &.disabled {
-    color: $fg-muted;
-  }
+  &.enabled  { color: $blue; }
+  &.disabled { color: $fg-muted; }
 }
 
 .media {
-  @include status-pill;
-  border-color: rgba($purple, 0.25);
+  @include icon-button;
 
   .media-icon {
     color: $purple;
-    font-size: 16px;
-  }
-
-  .media-title {
-    color: $fg-muted;
-    font-size: 12px;
+    font-size: 18px;
   }
 }
 
 .volume {
-  @include status-pill;
-  border-color: rgba($cyan, 0.25);
+  @include icon-button;
 
   .volume-icon {
     color: $cyan;
-    font-size: 16px;
+    font-size: 18px;
 
-    &.muted {
-      color: $fg-muted;
-    }
+    &.muted { color: $fg-muted; }
   }
 }
 
@@ -175,13 +149,11 @@
 }
 
 .powermenu {
-  @include status-pill;
+  @include icon-button;
   color: $red;
-  font-size: 16px;
-  border-color: rgba($red, 0.3);
-  background-color: rgba($red, 0.08);
+  font-size: 18px;
 
   &:hover {
-    background-color: rgba($red, 0.2);
+    background-color: rgba($red, 0.15);
   }
 }

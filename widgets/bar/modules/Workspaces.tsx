@@ -1,4 +1,5 @@
 import { createBinding, For } from "ags"
+import { Gtk } from "ags/gtk4"
 import Hyprland from "gi://AstalHyprland"
 
 export default function Workspaces() {
@@ -21,10 +22,10 @@ export default function Workspaces() {
           >
             <box
               cssClasses={focusedWorkspace.as((fw: Hyprland.Workspace | null) =>
-                fw?.id === ws.id
-                  ? ["workspace-dot", "active"]
-                  : ["workspace-dot"]
+                fw?.id === ws.id ? ["workspace-dot", "active"] : ["workspace-dot"]
               )}
+              halign={Gtk.Align.CENTER}
+              valign={Gtk.Align.CENTER}
             />
           </button>
         )}
