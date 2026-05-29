@@ -32,7 +32,7 @@ export default function CalendarWidget() {
       application={app}
     >
       <box orientation={Gtk.Orientation.VERTICAL} spacing={0}>
-        <calendar cssClasses={["cal"]} showDayNames showHeading />
+        <Gtk.Calendar cssClasses={["cal"]} showDayNames showHeading />
 
         <box cssClasses={["cal-events"]} orientation={Gtk.Orientation.VERTICAL} spacing={6}>
           <label
