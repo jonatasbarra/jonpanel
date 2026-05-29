@@ -13,7 +13,7 @@ export default function ActiveWindow() {
     <label
       cssClasses={["active-window"]}
       label={title}
-      maxWidthChars={50}
+      maxWidthChars={35}
       ellipsize={3}
     />
   )

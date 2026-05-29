@@ -11,7 +11,7 @@ export default function Workspaces() {
   )
 
   return (
-    <box cssClasses={["workspaces"]} spacing={4}>
+    <box cssClasses={["workspaces"]} spacing={6}>
       <For each={sorted}>
         {(ws: Hyprland.Workspace) => (
           <button
@@ -19,7 +19,7 @@ export default function Workspaces() {
               fw?.id === ws.id ? ["workspace", "active"] : ["workspace"]
             )}
             onClicked={() => hyprland.dispatch("workspace", `${ws.id}`)}
-            label={ws.id.toString()}
+            tooltipText={`Workspace ${ws.id}`}
           />
         )}
       </For>

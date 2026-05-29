@@ -14,12 +14,13 @@ import Powermenu from "./modules/Powermenu"
 const Left = () => (
   <box cssClasses={["bar-left"]} halign={Gtk.Align.START} hexpand spacing={8}>
     <Workspaces />
+    <ActiveWindow />
   </box>
 )
 
 const Center = () => (
   <box cssClasses={["bar-center"]} halign={Gtk.Align.CENTER}>
-    <ActiveWindow />
+    <Clock />
   </box>
 )
 
@@ -31,7 +32,6 @@ const Right = () => (
     <NetworkModule />
     <BatteryModule />
     <Volume />
-    <Clock />
     <Powermenu />
   </box>
 )
