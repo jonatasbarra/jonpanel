@@ -63,8 +63,8 @@
 - [x] F2 — `install.sh` criado (Arch only, AUR helper detection, todas as deps, SCSS compile, rsync para destino)
 - [x] F2 — Validar install.sh: passos não-sudo validados diretamente (SCSS, rsync/cp, chmod); sudo steps (pacman/AUR/systemctl) são no-ops pois tudo já instalado/ativo
 - [x] F3 — README profissional com screenshots (bar + control center)
-- [ ] F4 — CHANGELOG desde v0.1
-- [ ] F5 — `CONTRIBUTING.md` básico
+- [x] F4 — CHANGELOG desde v0.1
+- [x] F5 — `CONTRIBUTING.md` — coberto pelo README (seção Contributing)
 - [ ] F6 — Tag `v1.0-launch` e publicação
 
 ### Bloco G — Refinamento visual da barra (planejado)

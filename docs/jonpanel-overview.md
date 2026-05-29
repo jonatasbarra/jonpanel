@@ -35,35 +35,37 @@
 
 ## Componentes do MVP
 
-### 1. Top Bar (full-width)
+### 1. Top Bar (full-width) ✅
 - Altura: ~34px, sempre visível
 - Fundo: semi-transparente com blur via layerrule Hyprland
-- Layout: [workspaces | active window] ←→ [media | bt | net | battery | clock | powermenu]
+- Layout: [workspaces | active window] ←→ [tray | media | bt | net | battery | volume | clock | powermenu]
 - Estilo: full-width, sem margin lateral
 
-### 2. Control Center
-- Acionado por: clique no clock ou keybind (a definir — `ags message` para `toggleCC`)
+### 2. Control Center ✅
+- Acionado por: clique no clock
 - Overlay layer-shell TOP+RIGHT; visibilidade controlada por `services/controlcenter.ts`
-- Seções: sliders (volume + brilho) → quick toggles (WiFi, BT, DND, power profile) → notificações
-- Substitui: Swaync + scripts OSD atuais
-
-### 3. Notificações (daemon nativo AGS)
-- Via `astal-notifd` — AGS registra `org.freedesktop.Notifications` no D-Bus
-- Popups flutuantes (TOP+RIGHT, máx 3, auto-dismiss 4s) em `widgets/notifications/`
-- Histórico dentro do Control Center via `NotificationList`
+- Fecha ao clicar fora (focus lost)
+- Seções: VolumeSlider → BrightnessSlider → QuickToggles (WiFi, BT, DND, power profile) → NotificationList
 - Swaync completamente removido
 
-### 4. OSD
-- Overlay flutuante centralizado (ou inferior) — a definir
-- Volume: ícone + barra de progresso + percentual
-- Brilho: mesmo padrão
-- Auto-oculta em 2 segundos
+### 3. Notificações (daemon nativo AGS) ✅
+- Via `astal-notifd` — AGS registra `org.freedesktop.Notifications` no D-Bus
+- Popups flutuantes (TOP+RIGHT, máx 3, auto-dismiss 4s) em `widgets/notifications/`
+- Histórico dentro do Control Center via `NotificationList` (cresce até 10 cards, scroll após)
+- Swaync completamente removido
+
+### 4. OSD ✅
+- Window sem anchor = centralizada pelo wlr-layer-shell
+- Volume: ícone + levelbar + percentual; acionado via WirePlumber connect
+- Brilho: mesmo padrão; acionado via poll + detecção de mudança externa
+- Auto-oculta em 2 segundos com debounce
 
 ---
 
 ## Sistema de temas
 
 ### Arquitetura
+
 ```
 themes/
 ├── tokyo-night.scss    # default
@@ -75,13 +77,13 @@ themes/
 ### Variáveis obrigatórias por tema
 ```scss
 // Backgrounds
-$bg:        #1a1b26;  // janela principal
-$bg-alt:    #16161e;  // superfícies secundárias
-$surface:   #1f2335;  // cards, controles
+$bg:        #1a1b26;
+$bg-alt:    #16161e;
+$surface:   #1f2335;
 
 // Foreground
-$fg:        #c0caf5;  // texto principal
-$fg-muted:  #565f89;  // texto secundário
+$fg:        #c0caf5;
+$fg-muted:  #565f89;
 
 // Accent
 $blue:      #7aa2f7;
@@ -112,37 +114,73 @@ Nenhum componente usa cor hexadecimal direta. **Sempre via variável de tema.**
 - ✅ **Control Center completo** — sliders + toggles + notificações em overlay layer-shell
 - ✅ **Múltiplos temas desde o início** — arquitetura SCSS com variáveis por tema
 - ✅ **Tokyo Night como default**
-- ✅ **pnpm** — package manager do projeto
+- ✅ **pnpm** — package manager do projeto (sem dependências npm reais — ags/gnim vêm do AUR)
 - ✅ **Blur via layerrule Hyprland** — não CSS blur
 - ✅ **Reatividade via `createBinding` e `createComputed`** — API correta do gnim/AGS v3
 - ✅ **Listas reativas via `<For>`** — não `.as()` retornando JSX diretamente
-- ✅ **SCSS compilado manualmente** com `sass style.scss style.css` — GTK não processa SCSS
-- ✅ **Services como singletons** — `services/controlcenter.ts` com `createState` para visibilidade de janelas
+- ✅ **SCSS compilado manualmente** com `sass style.scss style.css`
+- ✅ **Services como singletons** — `createState` para visibilidade de janelas e estado do OSD
+- ✅ **OSD centralizado** — window sem anchor posicionada pelo wlr-layer-shell
+- ✅ **OSD via connect imperativo** — `GObject.connect` para volume (síncrono); `createComputed` é lazy e não dispara sem subscriber
+- ✅ **install.sh instala em `$HOME/.local/share/jonpanel/`** — path padrão para instalações de usuário; exec-once aponta para esse destino
+- ✅ **`ags` e `gnim` removidos do package.json** — são symlinks para `/usr/share/ags/` criados pelo AUR, não pacotes npm reais
 
 ### Decisões pendentes
 
-- 🔲 Nome dos workspaces: ícones pacman ou ícones por app?
-- 🔲 Posição do OSD: centro inferior ou centro tela?
+- 🔲 Workspaces: ícones pacman ou ícones por app?
 - 🔲 Animação do Control Center: slide down ou fade + scale?
 - 🔲 Config file: YAML? JSON? Só SCSS?
 - 🔲 Powermenu: diálogo de confirmação antes de executar ações
-- 🔲 Keybind SUPER+N: redirecionar para `ags message toggleCC` (swaync-client removido)
 
 ---
 
 ## Lições técnicas importantes (AGS v3 / gnim)
 
 - `createBinding(obj, "prop")` — reatividade em propriedade GObject
-- `createComputed(() => { ... })` — computed que rastreia múltiplas props reativamente
-- `createState(initial)` — `[getter, setter]` para estado local; getter é reativo e funciona com `<For>`
-- `<For each={accessor}>` — componente para listas reativas (não `.as()` retornando arrays JSX)
+- `createComputed(() => { ... })` — computed lazy; só reavalia quando há subscriber consumindo o valor
+- `createState(initial)` — `[getter, setter]` para estado local; getter é reativo
+- `<For each={accessor}>` — listas reativas (não `.as()` retornando arrays JSX)
 - `GLib.timeout_add(priority, ms, () => false)` — timer one-shot; retornar `false` cancela
-- `notifd.connect("notified", (_, id) => ...)` — sinal para novas notificações; buscar via `notifd.notifications.find(n => n.id === id)`
-- Importar de `"ags"` re-exporta tudo de `"gnim"`
+- `GLib.source_remove(id)` — cancela timeout pelo id; essencial para debounce
+- `GObject.connect("notify::prop", handler)` — imperativo e síncrono; garante disparo mesmo sem subscriber JSX
+- `notifd.connect("notified", (_, id) => ...)` — sinal para novas notificações
+- Window sem anchor = centralizada pelo wlr-layer-shell
 - SCSS deve ser compilado para CSS antes — `sass style.scss style.css`
-- `ags run arquivo.tsx --gtk 4` — flag obrigatória para GTK4
+- `ags run arquivo.tsx --gtk 4` — flag com espaço (não `--gtk4`)
 - `pkill -9 -f "ags"` — matar instância anterior antes de relancar
-- Symlinks em dotfiles: usar `readlink -f` para resolver antes de editar
+- `ags` e `gnim` no package.json com `"*"` causam `ERR_PNPM_MALFORMED_METADATA` — removê-los; os symlinks são criados pelo AUR automaticamente
+- `pnpm install` sem dependências npm reais é desnecessário — remover do install.sh
+
+---
+
+## Dependências externas do projeto
+
+### Ferramentas CLI (chamadas diretas no código)
+| Ferramenta | Pacote Arch | Usado em | Crítico |
+|---|---|---|---|
+| `brightnessctl` | `brightnessctl` | BrightnessSlider.tsx, OSD | Sim — slider de brilho quebra sem ele |
+| `powerprofilesctl` | `power-profiles-daemon` | QuickToggles.tsx | Sim — toggle de power profile quebra sem ele |
+
+### Daemons obrigatórios (via Astal bindings)
+| Daemon | Usado em |
+|---|---|
+| WirePlumber | Volume.tsx, VolumeSlider.tsx |
+| NetworkManager | Network.tsx |
+| BlueZ | Bluetooth.tsx |
+| UPower | Battery.tsx |
+
+---
+
+## Workflow de desenvolvimento recomendado
+
+Para sessões de desenvolvimento com execução direta de comandos (sem copiar/colar entre janelas):
+
+```bash
+cd ~/projects/jonpanel
+claude --dangerously-skip-permissions
+```
+
+Isso permite que o Claude CLI execute comandos, edite arquivos e rode `sudo` diretamente no terminal com TTY completo. Usar apenas em sessões de desenvolvimento.
 
 ---
 
@@ -153,18 +191,18 @@ Nenhum componente usa cor hexadecimal direta. **Sempre via variável de tema.**
 - **Branch de desenvolvimento:** `feat/initial`
 - **Visibilidade:** público
 
-### Tags planejadas
+### Tags
 | Tag | Marco |
 |---|---|
-| `v0.1-bar` | Top bar funcional com todos os módulos |
-| `v0.2-control-center` | Control Center + notificações AGS nativas (Bloco D completo) |
-| `v0.3-osd` | OSD de volume e brilho |
+| `v0.1-bar` | Top bar funcional com todos os módulos ✅ |
+| `v0.2-control-center` | Control Center + notificações AGS nativas ✅ |
+| `v0.3-osd` | OSD de volume e brilho ✅ |
 | `v1.0-launch` | MVP completo, README com screenshots |
 
 ---
 
 ## Estado atual
 
-**Bloco atual:** Bloco D concluído — Control Center e notificações funcionais
-**Última tag:** `v0.2-control-center`
-**Próxima etapa:** Bloco E — OSD de volume e brilho
+**Bloco atual:** Bloco F concluído — MVP publicado
+**Última tag:** `v1.0-launch`
+**Próxima etapa:** Bloco G — refinamento visual da barra
