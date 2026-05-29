@@ -38,6 +38,7 @@ echo "==> Installing pacman dependencies..."
 
 PACMAN_DEPS=(
   dart-sass
+  rsync
   brightnessctl
   power-profiles-daemon
   libgtop
@@ -87,7 +88,9 @@ if command -v rsync &>/dev/null; then
     --exclude='@girs' \
     "$SCRIPT_DIR/" "$INSTALL_DIR/"
 else
-  cp -r "$SCRIPT_DIR/." "$INSTALL_DIR/"
+  find "$SCRIPT_DIR" -mindepth 1 -maxdepth 1 \
+    ! -name '.git' ! -name 'node_modules' ! -name '@girs' \
+    -exec cp -r {} "$INSTALL_DIR/" \;
 fi
 
 chmod +x "$INSTALL_DIR/launch.sh"
