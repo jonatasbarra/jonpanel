@@ -4,6 +4,7 @@ import { getCCVisible } from "../../services/controlcenter"
 import VolumeSlider from "./components/VolumeSlider"
 import BrightnessSlider from "./components/BrightnessSlider"
 import QuickToggles from "./components/QuickToggles"
+import NotificationList from "./components/NotificationList"
 
 export default function ControlCenter() {
   const { TOP, RIGHT } = Astal.WindowAnchor
@@ -22,11 +23,12 @@ export default function ControlCenter() {
       <box
         orientation={Gtk.Orientation.VERTICAL}
         cssClasses={["cc-container"]}
-        widthRequest={360}
+        widthRequest={380}
       >
         <VolumeSlider />
         <BrightnessSlider />
         <QuickToggles />
+        <NotificationList />
       </box>
     </window>
   )
