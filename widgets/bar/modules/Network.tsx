@@ -28,19 +28,14 @@ export default function NetworkModule() {
 
   const connected = createBinding(wifi, "ssid").as((s: string | null) => !!s)
 
-  const ssid = createBinding(wifi, "ssid").as(
-    (s: string | null) => s ?? "offline"
-  )
-
   return (
-    <box cssClasses={["network"]} spacing={4}>
+    <box cssClasses={["network"]}>
       <label
         cssClasses={connected.as((c: boolean) =>
           c ? ["network-icon"] : ["network-icon", "disconnected"]
         )}
         label={icon}
       />
-      <label cssClasses={["network-label"]} label={ssid} />
     </box>
   )
 }

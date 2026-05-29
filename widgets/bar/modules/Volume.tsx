@@ -26,8 +26,6 @@ export default function Volume() {
     return "󰕾"
   })
 
-  const label = createComputed(() => `${Math.round(volume() * 100)}%`)
-
   // GObject signal — fires immediately on every WirePlumber property change,
   // bypassing gnim's lazy createComputed. Reconnects if default speaker changes.
   const connectSpeakerOSD = (s: AstalWp.Endpoint) => {
@@ -48,14 +46,13 @@ export default function Volume() {
   })
 
   return (
-    <box cssClasses={["volume"]} spacing={4}>
+    <box cssClasses={["volume"]}>
       <label
         cssClasses={muted.as((m: boolean) =>
           m ? ["volume-icon", "muted"] : ["volume-icon"]
         )}
         label={icon}
       />
-      <label cssClasses={["volume-label"]} label={label} />
     </box>
   )
 }

@@ -43,12 +43,9 @@ export default function BatteryModule() {
     return ["battery-icon"]
   })
 
-  const label = percentage.as((p: number) => `${Math.round(p * 100)}%`)
-
   return (
-    <box cssClasses={["battery"]} spacing={4}>
+    <box cssClasses={["battery"]}>
       <label cssClasses={iconClasses} label={icon} />
-      <label cssClasses={["battery-label"]} label={label} />
     </box>
   )
 }
