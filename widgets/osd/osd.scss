@@ -1,0 +1,48 @@
+@use "../../themes/tokyo-night" as *;
+
+.osd-window {
+  background-color: transparent;
+}
+
+.osd-container {
+  background-color: $blur-bg;
+  border: 1px solid $border;
+  border-radius: 12px;
+  padding: 16px 20px;
+}
+
+.osd-icon {
+  font-size: 24px;
+  color: $fg;
+}
+
+.osd-levelbar {
+  min-height: 6px;
+
+  trough {
+    border-radius: 4px;
+    min-height: 6px;
+    background-color: $surface;
+    border: 1px solid $border;
+  }
+
+  block {
+    min-height: 6px;
+    border-radius: 4px;
+
+    &.filled {
+      background-color: $blue;
+      border: none;
+    }
+
+    &.empty {
+      background-color: transparent;
+      border: none;
+    }
+  }
+}
+
+.osd-label {
+  font-size: 13px;
+  color: $fg-muted;
+}
