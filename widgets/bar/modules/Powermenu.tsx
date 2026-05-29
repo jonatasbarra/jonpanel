@@ -1,13 +1,11 @@
-import { execAsync } from "ags/process"
+import { togglePowerMenu } from "../../../services/powermenu"
 
-// TODO: replace with Rofi powermenu when script is configured
 export default function Powermenu() {
   return (
     <button
       cssClasses={["powermenu"]}
-      onClicked={() =>
-        execAsync(["bash", "-c", "systemctl poweroff"]).catch(console.error)
-      }
+      tooltipText="Power"
+      onClicked={togglePowerMenu}
       label="󰐥"
     />
   )

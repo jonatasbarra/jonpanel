@@ -5,6 +5,7 @@ import Notifications from "./widgets/notifications/Notifications"
 import OSD from "./widgets/osd/OSD"
 import WifiMenu from "./widgets/wifimenu/WifiMenu"
 import BtMenu from "./widgets/btmenu/BtMenu"
+import PowerMenu from "./widgets/powermenu/PowerMenu"
 
 app.start({
   css: `${SRC}/style.css`,
@@ -15,5 +16,6 @@ app.start({
     OSD()
     WifiMenu()
     BtMenu()
+    PowerMenu()
   },
 })
