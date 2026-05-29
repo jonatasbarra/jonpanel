@@ -12,7 +12,42 @@
   margin: 8px;
 }
 
-.cc-placeholder {
-  color: $fg-muted;
-  font-size: 13px;
+.volume-slider {
+  padding: 4px 0;
+
+  .volume-slider-icon {
+    color: $cyan;
+    font-size: 16px;
+    min-width: 20px;
+  }
+
+  .volume-slider-label {
+    color: $fg-muted;
+    font-size: 12px;
+    min-width: 36px;
+  }
+
+  slider {
+    color: $blue;
+  }
+}
+
+.brightness-slider {
+  padding: 4px 0;
+
+  .brightness-icon {
+    color: $yellow;
+    font-size: 16px;
+    min-width: 20px;
+  }
+
+  .brightness-label {
+    color: $fg-muted;
+    font-size: 12px;
+    min-width: 36px;
+  }
+
+  slider {
+    color: $blue;
+  }
 }
