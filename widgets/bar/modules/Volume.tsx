@@ -26,15 +26,18 @@ export default function Volume() {
     return "󰕾"
   })
 
+  const tooltip = createComputed(() => {
+    const v = Math.round(volume() * 100)
+    return muted() ? `Muted (${v}%)` : `${v}%`
+  })
+
   // GObject signal — fires immediately on every WirePlumber property change,
   // bypassing gnim's lazy createComputed. Reconnects if default speaker changes.
   const connectSpeakerOSD = (s: AstalWp.Endpoint) => {
     s.connect("notify::volume", () => {
-      console.log("[OSD] volume changed →", s.mute ? 0 : Math.round(s.volume * 100))
       showOSD("volume", s.mute ? 0 : Math.round(s.volume * 100))
     })
     s.connect("notify::mute", () => {
-      console.log("[OSD] mute toggled →", s.mute)
       showOSD("volume", s.mute ? 0 : Math.round(s.volume * 100))
     })
   }
@@ -46,13 +49,20 @@ export default function Volume() {
   })
 
   return (
-    <box cssClasses={["volume"]}>
+    <button
+      cssClasses={["volume"]}
+      tooltipText={tooltip}
+      onClicked={() => {
+        const s = wp.defaultSpeaker
+        if (s) s.mute = !s.mute
+      }}
+    >
       <label
         cssClasses={muted.as((m: boolean) =>
           m ? ["volume-icon", "muted"] : ["volume-icon"]
         )}
         label={icon}
       />
-    </box>
+    </button>
   )
 }

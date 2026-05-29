@@ -1,11 +1,15 @@
 @use "../../themes/tokyo-night" as *;
 
-// Shared pill style for all right-side status modules
+// Shared pill style for all right-side status modules (applied to <button>)
 @mixin status-pill {
   background-color: $surface;
   border: 1px solid rgba($blue, 0.2);
   border-radius: 8px;
   padding: 2px 8px;
+
+  &:hover {
+    background-color: rgba($fg, 0.06);
+  }
 }
 
 .bar {

@@ -7,7 +7,6 @@ export default function Media() {
 
   const visible = players.as((ps: Mpris.Player[]) => ps.length > 0)
 
-  // createComputed tracks reactive reads inside — picks up title/artist changes
   const text = createComputed(() => {
     const player = players()[0]
     if (!player) return ""
@@ -24,14 +23,13 @@ export default function Media() {
   })
 
   return (
-    <box cssClasses={["media"]} spacing={6} visible={visible}>
+    <button
+      cssClasses={["media"]}
+      visible={visible}
+      tooltipText={text}
+      onClicked={() => players.peek()[0]?.play_pause()}
+    >
       <label cssClasses={["media-icon"]} label={icon} />
-      <label
-        cssClasses={["media-title"]}
-        label={text}
-        maxWidthChars={30}
-        ellipsize={3}
-      />
-    </box>
+    </button>
   )
 }

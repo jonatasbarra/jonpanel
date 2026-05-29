@@ -31,21 +31,22 @@ export default function BatteryModule() {
   const percentage = createBinding(battery, "percentage")
   const charging = createBinding(battery, "charging")
 
-  const icon = createComputed(() =>
-    batteryIcon(percentage(), charging())
-  )
+  const icon = createComputed(() => batteryIcon(percentage(), charging()))
 
   const iconClasses = createComputed(() => {
-    const c = charging()
-    const p = percentage()
-    if (c) return ["battery-icon", "charging"]
-    if (p <= 0.15) return ["battery-icon", "low"]
+    if (charging()) return ["battery-icon", "charging"]
+    if (percentage() <= 0.15) return ["battery-icon", "low"]
     return ["battery-icon"]
   })
 
+  const tooltip = createComputed(() => {
+    const p = Math.round(percentage() * 100)
+    return charging() ? `${p}% · Charging` : `${p}% · Discharging`
+  })
+
   return (
-    <box cssClasses={["battery"]}>
+    <button cssClasses={["battery"]} tooltipText={tooltip}>
       <label cssClasses={iconClasses} label={icon} />
-    </box>
+    </button>
   )
 }

@@ -1,0 +1,61 @@
+@use "../../themes/tokyo-night" as *;
+
+.wifi-menu,
+.bt-menu {
+  background-color: $bg;
+  border: 1px solid $border;
+  border-radius: 12px;
+  padding: 12px 8px;
+  min-width: 220px;
+  margin-top: 4px;
+  margin-right: 4px;
+
+  .menu-header {
+    color: $fg-muted;
+    font-size: 11px;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin: 0 8px 4px;
+  }
+}
+
+.wifi-ap-row,
+.bt-device-row {
+  background-color: transparent;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 10px;
+
+  &:hover {
+    background-color: rgba($fg, 0.06);
+  }
+
+  &.active {
+    background-color: rgba($blue, 0.12);
+  }
+
+  .ap-icon,
+  .device-icon {
+    color: $blue;
+    font-size: 15px;
+    min-width: 20px;
+  }
+
+  .ap-ssid,
+  .device-name {
+    color: $fg;
+    font-size: 12px;
+  }
+
+  .ap-status {
+    color: $green;
+    font-size: 13px;
+    min-width: 16px;
+  }
+
+  .device-status {
+    color: $green;
+    font-size: 13px;
+    min-width: 16px;
+  }
+}

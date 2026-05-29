@@ -1,7 +1,7 @@
 import { createBinding } from "ags"
 import Network from "gi://AstalNetwork"
+import { toggleWifiMenu } from "../../../services/wifimenu"
 
-// Connected to internet: filled icons; no internet: outlined icons
 const WIFI_ICONS = {
   connected:    ["󰤟", "󰤢", "󰤥", "󰤨"],
   disconnected: ["󰤠", "󰤣", "󰤦", "󰤩"],
@@ -27,15 +27,20 @@ export default function NetworkModule() {
   })
 
   const connected = createBinding(wifi, "ssid").as((s: string | null) => !!s)
+  const tooltip = createBinding(wifi, "ssid").as((s: string | null) => s ?? "Offline")
 
   return (
-    <box cssClasses={["network"]}>
+    <button
+      cssClasses={["network"]}
+      tooltipText={tooltip}
+      onClicked={toggleWifiMenu}
+    >
       <label
         cssClasses={connected.as((c: boolean) =>
           c ? ["network-icon"] : ["network-icon", "disconnected"]
         )}
         label={icon}
       />
-    </box>
+    </button>
   )
 }
