@@ -1,0 +1,103 @@
+@use "../../themes/tokyo-night" as *;
+
+.calendar-backdrop button {
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+.calendar-popup {
+  background-color: $bg;
+  border: 1px solid $border;
+  border-radius: 12px;
+  margin-top: 4px;
+  overflow: hidden;
+
+  // GTK4 Calendar widget nodes
+  calendar.cal {
+    background-color: transparent;
+    color: $fg;
+    border: none;
+    padding: 8px;
+
+    // Month/year header row
+    header {
+      color: $fg;
+      font-weight: bold;
+      font-size: 13px;
+      padding: 4px 0 8px;
+
+      button {
+        background-color: transparent;
+        border: none;
+        color: $fg-muted;
+        border-radius: 6px;
+
+        &:hover {
+          background-color: rgba($fg, 0.08);
+          color: $fg;
+        }
+      }
+    }
+
+    // Day name row (Mo, Tu, ...)
+    label.day-name {
+      color: $fg-muted;
+      font-size: 11px;
+      font-weight: bold;
+    }
+
+    // Day number buttons
+    button.day {
+      background-color: transparent;
+      border: none;
+      border-radius: 50%;
+      color: $fg;
+      font-size: 12px;
+      min-width: 28px;
+      min-height: 28px;
+
+      &:hover {
+        background-color: rgba($fg, 0.08);
+      }
+
+      // Days from previous/next month
+      &.other-month {
+        color: rgba($fg, 0.25);
+      }
+
+      // Today
+      &.today {
+        color: $blue;
+        font-weight: bold;
+      }
+
+      // Selected day
+      &:selected,
+      &.selected {
+        background-color: $blue;
+        color: $bg;
+      }
+    }
+  }
+
+  // Events section below the calendar
+  .cal-events {
+    border-top: 1px solid $border;
+    padding: 12px 16px;
+    min-width: 260px;
+
+    .cal-events-header {
+      color: $fg-muted;
+      font-size: 11px;
+      font-weight: bold;
+      text-transform: uppercase;
+      margin-bottom: 2px;
+    }
+
+    .cal-events-empty {
+      color: rgba($fg, 0.35);
+      font-size: 12px;
+    }
+  }
+}

@@ -6,6 +6,7 @@ import OSD from "./widgets/osd/OSD"
 import WifiMenu from "./widgets/wifimenu/WifiMenu"
 import BtMenu from "./widgets/btmenu/BtMenu"
 import PowerMenu from "./widgets/powermenu/PowerMenu"
+import CalendarWidget from "./widgets/calendar/CalendarWidget"
 
 app.start({
   css: `${SRC}/style.css`,
@@ -17,5 +18,6 @@ app.start({
     WifiMenu()
     BtMenu()
     PowerMenu()
+    CalendarWidget()
   },
 })
