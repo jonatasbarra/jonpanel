@@ -122,7 +122,6 @@
 .media {
   @include status-pill;
   border-color: rgba($purple, 0.25);
-  spacing: 4px;
 
   .media-icon {
     color: $purple;

@@ -1,4 +1,5 @@
 import { createBinding } from "ags"
+import { Gtk } from "ags/gtk4"
 import Network from "gi://AstalNetwork"
 import { toggleWifiMenu } from "../../../services/wifimenu"
 
@@ -34,11 +35,15 @@ export default function NetworkModule() {
       cssClasses={["network"]}
       tooltipText={tooltip}
       onClicked={toggleWifiMenu}
+      halign={Gtk.Align.CENTER}
+      valign={Gtk.Align.CENTER}
     >
       <label
         cssClasses={connected.as((c: boolean) =>
           c ? ["network-icon"] : ["network-icon", "disconnected"]
         )}
+        halign={Gtk.Align.CENTER}
+        valign={Gtk.Align.CENTER}
         label={icon}
       />
     </button>

@@ -1,5 +1,13 @@
 @use "../../themes/tokyo-night" as *;
 
+// Transparent click-catcher for outside-click close
+.wifi-backdrop button,
+.bt-backdrop button {
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+}
+
 .wifi-menu,
 .bt-menu {
   background-color: $bg;
@@ -17,6 +25,12 @@
     text-transform: uppercase;
     margin: 0 8px 4px;
   }
+}
+
+.menu-empty {
+  color: $fg-muted;
+  font-size: 12px;
+  padding: 8px 10px;
 }
 
 .wifi-ap-row,

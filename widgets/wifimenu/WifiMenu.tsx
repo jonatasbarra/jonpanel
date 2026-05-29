@@ -1,6 +1,6 @@
 import app from "ags/gtk4/app"
 import { Astal, Gtk } from "ags/gtk4"
-import { createBinding } from "ags"
+import { createBinding, For } from "ags"
 import Network from "gi://AstalNetwork"
 import { getWifiMenuVisible, closeWifiMenu } from "../../services/wifimenu"
 
@@ -37,7 +37,9 @@ function ApRow({ ap, wifi }: { ap: Network.AccessPoint; wifi: Network.Wifi }) {
         />
         <label
           cssClasses={["ap-status"]}
-          label={isActive.as((a: boolean) => (a ? "󰗠" : ap.requires_password ? "󰌾" : ""))}
+          label={isActive.as((a: boolean) =>
+            a ? "󰗠" : ap.requires_password ? "󰌾" : ""
+          )}
         />
       </box>
     </button>
@@ -59,6 +61,7 @@ export default function WifiMenu() {
   const _backdrop = (
     <window
       name="wifi-backdrop"
+      cssClasses={["wifi-backdrop"]}
       anchor={TOP | RIGHT | BOTTOM | LEFT}
       layer={Astal.Layer.TOP}
       exclusivity={Astal.Exclusivity.NORMAL}
@@ -66,9 +69,7 @@ export default function WifiMenu() {
       visible={getWifiMenuVisible}
       application={app}
     >
-      <button hexpand vexpand onClicked={closeWifiMenu}>
-        <box />
-      </button>
+      <button hexpand vexpand onClicked={closeWifiMenu} />
     </window>
   )
 
