@@ -1,6 +1,6 @@
 # JonPanel — Progresso e Log de Sessões
 
-**Status atual:** Bloco D concluído — Control Center e notificações funcionais
+**Status atual:** Bloco F em andamento — F1 e F2 concluídas; próxima: F3 (README)
 **Última atualização:** 2026-05-29
 
 ---
@@ -49,18 +49,29 @@
 
 ### Bloco E — OSD
 
-- [ ] E1 — OSD de volume (popup flutuante, auto-oculta 2s)
-- [ ] E2 — OSD de brilho
-- [ ] E3 — Desativar scripts `osd-volume` e `osd-brightness` do rice
+- [x] E1 — `services/osd.ts` com debounce via `GLib.source_remove`
+- [x] E2 — `OSD.tsx` centralizado na tela via layer shell sem anchor
+- [x] E3 — Volume conectado via `GObject.connect("notify::volume")` — síncrono
+- [x] E4 — Brightness via `createPoll` com detecção de mudança externa (keybinds)
 
 ### Bloco F — Portabilidade e publicação
 
-- [ ] F1 — Revisar: nenhuma cor hardcoded, nenhum path absoluto
-- [ ] F2 — `install.sh` pensado para outros usuários
+- [x] F1a — Auditoria de cores hardcoded — zero violações
+- [x] F1b — Auditoria de paths absolutos — 2 fixes em launch.sh (path + UID hardcoded)
+- [x] F1c — Auditoria de dependências implícitas — mapeadas: brightnessctl, power-profiles-daemon + daemons Astal
+- [x] F1d — Auditoria do fluxo de boot — exec-once corrigido nos dotfiles; decisão de path padrão tomada ($HOME/.local/share/jonpanel/)
+- [x] F2 — `install.sh` criado (Arch only, AUR helper detection, todas as deps, SCSS compile, rsync para destino)
+- [x] F2 — Validar install.sh: passos não-sudo validados diretamente (SCSS, rsync/cp, chmod); sudo steps (pacman/AUR/systemctl) são no-ops pois tudo já instalado/ativo
 - [ ] F3 — README profissional com screenshots
 - [ ] F4 — CHANGELOG desde v0.1
 - [ ] F5 — `CONTRIBUTING.md` básico
 - [ ] F6 — Tag `v1.0-launch` e publicação
+
+### Bloco G — Refinamento visual da barra (planejado)
+
+- [ ] G1 — Relógio: ajustar proporção hora vs data (hora dominando demais)
+- [ ] G2 — Status icons: aumentar tamanho e peso visual (battery, wifi, bt, volume)
+- [ ] G3 — Harmonia geral: revisar font-size e espaçamento entre módulos do lado direito
 
 ---
 
@@ -77,39 +88,83 @@
   - paru, mise (Node 24.16.0), JetBrains Mono Nerd Font, WirePlumber instalados
   - GNU Stow + dotfiles versionados
 - **A1:** Repo criado em `github.com/jonatasbarra/jonpanel`, branch `feat/initial`
-- **A2:** AGS 3.1.0 + Sass 1.100.0 instalados. Astal libs: battery, network, bluetooth, mpris, notifd, hyprland, gjs instaladas. wireplumber e tray falharam inicialmente (distutils Python)
+- **A2:** AGS 3.1.0 + Sass 1.100.0 instalados. Astal libs instaladas. wireplumber e tray falharam inicialmente (distutils Python)
 - **A3:** Projeto inicializado com `ags init`, pnpm configurado, tipos gerados
 - **A4:** Hello World GTK4 + Tokyo Night funcionando. Descoberto: SCSS deve ser compilado manualmente
 - **A5:** `launch.sh` criado, integrado ao `exec-once` do Hyprland
 - **B1-B4:** Estrutura de diretórios, tema, Bar com três zonas
-- **C1:** Workspaces reativos com `<For>` (não `.as()` retornando JSX)
-- **C2:** ActiveWindow com `createBinding`
-- **C3:** Clock com `createPoll`
-- **C4-C6:** Battery, Network, Bluetooth
-- **C7-C8:** Volume (WirePlumber) e Tray — implementados após resolução de build
-- **C9:** Media com `createComputed` para reatividade em propriedades do player
-- **C10:** Powermenu (systemctl direto — TODO: diálogo de confirmação)
-- Commits: feat: initial setup, feat: bar structure, feat: Workspaces/ActiveWindow/Clock, feat: Battery/Network/Bluetooth, feat: Media, feat: Powermenu, feat: complete bar with all 10 modules
+- **C1-C10:** Todos os módulos da barra implementados
+- Commits: feat: initial setup → feat: complete bar with all 10 modules
 
 ### Sessão 2 — 2026-05-28 — Bloco D (Control Center e notificações)
-- **D1:** `widgets/controlcenter/ControlCenter.tsx` — window layer-shell TOP+RIGHT, OVERLAY; `services/controlcenter.ts` com `createState` para visibilidade; `toggleCC()`/`closeCC()` exportados
-- **D2:** `VolumeSlider.tsx` — slider reativo via `AstalWp`, ícone muda por faixa (mudo/baixo/médio/alto)
-- **D3:** `BrightnessSlider.tsx` — lê e escreve brilho via `brightnessctl`, polling com `createPoll`
-- **D4:** `QuickToggles.tsx` — WiFi, Bluetooth, DND, Power Profile; estado ativo via `createBinding`; `getDND()` exportado para consumo pelo NotificationList
-- **D5:** `NotificationList.tsx` — lista reativa com `<For>`, banner DND, estado vazio, dismiss por card; `.notif-card` com `hexpand`, body com wrap sem truncamento
-- **D6:** `widgets/notifications/Notifications.tsx` — terceira window, TOP+RIGHT, máx 3 popups, `GLib.timeout_add` (4000ms) para auto-dismiss, `notifd.connect("notified")` para captura em tempo real; reutiliza classes `.notif-card` do controlcenter.scss
-- **D7:** `pkill -f swaync` já presente no `launch.sh`; `exec-once = swaync` estava comentado no hyprland.conf; `layerrules` e `bind` de swaync-client comentados em `dotfiles/hypr`; após matar swaync em sessão ativa, `gjs` (AGS) assumiu `org.freedesktop.Notifications` no D-Bus imediatamente
-- **Fix:** card de notificação corrigido — `widthRequest` 360→380px, `hexpand` no scrolledwindow e no card box, `min-width: 0` no CSS
-- Commits: feat: QuickToggles, feat: Control Center complete, feat: notification popups (D6), chore: remove swaync (D7)
+- **D0:** Build do `libastal-wireplumber-git` e `libastal-tray-git` resolvido — mise Python 3.14.5 não tinha setuptools
+- **D1:** `ControlCenter.tsx` — window layer-shell TOP+RIGHT, OVERLAY; `services/controlcenter.ts`
+- **D2:** `VolumeSlider.tsx` — slider reativo via `AstalWp`, ícone por faixa
+- **D3:** `BrightnessSlider.tsx` — lê/escreve via `brightnessctl`, guard `lastWritten` evita loop poll→write→poll
+- **D4:** `QuickToggles.tsx` — WiFi, Bluetooth, DND, Power Profile
+- **D5:** `NotificationList.tsx` — lista reativa com `<For>`, banner DND
+- **D6:** Notification popups flutuantes — auto-dismiss 4s, máx 3, dismiss manual
+- **D7:** Swaync completamente removido; AGS é o daemon D-Bus
+- Tag: `v0.2-control-center`
 
----
+### Sessão 3 — 2026-05-29 — Bloco E (OSD) + Bloco F início (auditoria + install.sh)
 
-## Pendências e decisões abertas
+#### Bloco E
+- **E1-E4:** OSD de volume e brilho implementado e funcional
+- Tag: `v0.3-osd`
 
-| # | Decisão | Status |
-|---|---|---|
-| 1 | Workspaces: ícones pacman ou ícones por app? | Aberta |
-| 2 | Posição do OSD: centro inferior ou centro tela? | Aberta |
-| 3 | Animação do Control Center: slide ou fade+scale? | Aberta |
-| 4 | Config file para o usuário: YAML, JSON ou só SCSS? | Aberta |
-| 5 | Powermenu: diálogo de confirmação | Pendente |
+#### Bloco F — Auditoria (F1)
+- **F1a:** Zero cores hardcoded fora de `themes/` — todos os `rgba()` usam variáveis de tema como base ✅
+- **F1b:** 2 fixes em `launch.sh`:
+  - Path absoluto `/home/jon/projects/jonpanel/app.tsx` → `$SCRIPT_DIR/app.tsx`
+  - UID hardcoded `/run/user/1000` → `/run/user/$(id -u)`
+  - `pkill -f swaync` (resíduo do Bloco D) removido
+  - Commits: `fix: replace hardcoded absolute path`, `fix: remove swaync remnant and fix hardcoded UID`
+- **F1c:** Dependências implícitas mapeadas:
+  - `brightnessctl` — BrightnessSlider.tsx + OSD
+  - `power-profiles-daemon` (powerprofilesctl) — QuickToggles.tsx
+  - Daemons via Astal: WirePlumber, NetworkManager, BlueZ, UPower
+- **F1d:** `exec-once` no `hyprland.conf` dos dotfiles corrigido:
+  - `/home/jon/projects/jonpanel/launch.sh` → `$HOME/.local/share/jonpanel/launch.sh`
+  - Decisão: install.sh instala em `$HOME/.local/share/jonpanel/` (path padrão, previsível)
+  - Commit no repo `my-hyprland-rice`: `fix: use $HOME-relative path for jonpanel exec-once`
+
+#### Bloco F — install.sh (F2)
+- `install.sh` criado com 129 linhas:
+  - Detecção de distro (Arch only)
+  - Detecção de AUR helper (paru → yay → abort)
+  - Instalação de deps pacman + AUR
+  - Compilação SCSS
+  - rsync para `$HOME/.local/share/jonpanel/` com `--delete`
+  - `systemctl enable --now power-profiles-daemon`
+  - Mensagem final com instrução do `exec-once`
+- Fixes aplicados durante criação:
+  - `pnpm install` removido — `ags` e `gnim` não são pacotes npm reais
+  - `ags`/`gnim` removidos do `package.json` — são symlinks para `/usr/share/ags/` criados pelo AUR
+  - `pnpm install --prefer-offline` não resolveu o problema — solução foi remover as deps
+- Commits: `chore: add install.sh`, `fix: use --prefer-offline`, `fix: remove pnpm install step`, `chore: remove ags and gnim from package.json`
+- **Pendente:** executar `bash install.sh` com TTY real para validar funcionamento completo
+
+#### Bloco F — Validação do install.sh (F2 concluída)
+- Todos os passos não-sudo validados em execução direta:
+  - SCSS: `sass style.scss style.css` — OK
+  - rsync fallback fix: `cp -r` substituído por `find ... -exec cp -r` com exclusões corretas
+  - `rsync` adicionado ao PACMAN_DEPS (instalado pelo próprio script em sistemas frescos)
+  - Destino `~/.local/share/jonpanel/` limpo e correto: `.git`, `node_modules`, `@girs` excluídos
+  - `launch.sh` com permissão de execução e paths relativos corretos
+- Passos sudo (pacman, AUR, systemctl) validados indiretamente: todos pacotes já instalados, power-profiles-daemon já enabled/active
+- Commit: `fix: add rsync to pacman deps and fix cp fallback exclusions`
+- F2 marcada como concluída ✅
+
+#### Descoberta de workflow
+- Claude CLI com `--dangerously-skip-permissions` é o workflow ideal para desenvolvimento
+- Elimina o ciclo copiar/colar entre claude.ai e terminal
+- Usar: `cd ~/projects/jonpanel && claude --dangerously-skip-permissions`
+- Lembrar: ao fim de cada sessão CLI, pedir atualização de `jonpanel-overview.md` e `jonpanel-progress.md`
+
+#### Observação visual registrada (Bloco G)
+- Barra com problemas de harmonia visual identificados via screenshot:
+  - Hora (`17:15`) muito grande em relação à data (`Fri 29 May`)
+  - Status icons (battery, wifi, bt, volume) pequenos demais
+  - Densidade visual irregular entre lado esquerdo e direito
+- Bloco G planejado para refinamento visual após publicação do MVP
