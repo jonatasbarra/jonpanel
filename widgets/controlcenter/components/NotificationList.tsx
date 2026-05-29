@@ -9,6 +9,7 @@ export default function NotificationList() {
 
   const isEmpty = createComputed(() => notifications().length === 0)
   const dndActive = createComputed(() => getDND())
+  const overflows = createComputed(() => notifications().length > 10)
 
   return (
     <box cssClasses={["notif-list"]} orientation={Gtk.Orientation.VERTICAL} spacing={6}>
@@ -40,12 +41,13 @@ export default function NotificationList() {
       <scrolledwindow
         cssClasses={["notif-scroll"]}
         visible={createComputed(() => !dndActive() && !isEmpty())}
-        vscrollbarPolicy={Gtk.PolicyType.AUTOMATIC}
+        vscrollbarPolicy={createComputed(() => overflows() ? Gtk.PolicyType.AUTOMATIC : Gtk.PolicyType.NEVER)}
         hscrollbarPolicy={Gtk.PolicyType.NEVER}
-        maxContentHeight={300}
+        propagateNaturalHeight={createComputed(() => !overflows())}
+        maxContentHeight={createComputed(() => overflows() ? 500 : -1)}
         hexpand={true}
       >
-        <box orientation={Gtk.Orientation.VERTICAL} spacing={6}>
+        <box orientation={Gtk.Orientation.VERTICAL} spacing={6} hexpand={true}>
           <For each={notifications}>
             {(notif: Notifd.Notification) => (
               <box cssClasses={["notif-card"]} spacing={10} hexpand={true}>
@@ -70,21 +72,25 @@ export default function NotificationList() {
 
                 {/* Content */}
                 <box
+                  cssClasses={["notif-content"]}
                   orientation={Gtk.Orientation.VERTICAL}
                   spacing={2}
-                  hexpand
+                  hexpand={true}
                 >
                   <label
                     cssClasses={["notif-app-name"]}
                     label={notif.appName ?? ""}
                     xalign={0}
                     ellipsize={3}
+                    hexpand={true}
                   />
                   <label
                     cssClasses={["notif-summary"]}
                     label={notif.summary ?? ""}
                     xalign={0}
-                    ellipsize={3}
+                    wrap
+                    wrapMode={2}
+                    hexpand={true}
                   />
                   {notif.body ? (
                     <label
@@ -93,6 +99,7 @@ export default function NotificationList() {
                       xalign={0}
                       wrap
                       wrapMode={2}
+                      hexpand={true}
                     />
                   ) : null}
                 </box>

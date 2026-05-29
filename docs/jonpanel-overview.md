@@ -28,7 +28,7 @@
 | Linguagem | TypeScript + JSX | Background React Native do autor |
 | Estilo | SCSS com dart-sass | Variáveis, nesting, portabilidade |
 | Toolkit | GTK4 + gtk4-layer-shell | Layer shell para Wayland |
-| Astal libs | Battery, Network, Bluetooth, Mpris, Hyprland, Notifd | Bindings oficiais |
+| Astal libs | Battery, Network, Bluetooth, Mpris, Hyprland, Notifd, WirePlumber, Tray | Bindings oficiais |
 | Package manager | pnpm | Mais eficiente que npm |
 
 ---
@@ -42,18 +42,19 @@
 - Estilo: full-width, sem margin lateral
 
 ### 2. Control Center
-- Acionado por: clique no clock ou keybind SUPER+N
-- Slide down a partir da barra
+- Acionado por: clique no clock ou keybind (a definir — `ags message` para `toggleCC`)
+- Overlay layer-shell TOP+RIGHT; visibilidade controlada por `services/controlcenter.ts`
 - Seções: sliders (volume + brilho) → quick toggles (WiFi, BT, DND, power profile) → notificações
 - Substitui: Swaync + scripts OSD atuais
 
 ### 3. Notificações (daemon nativo AGS)
-- via `astal-notifd`
-- Popups flutuantes no canto superior direito
-- Histórico dentro do Control Center
+- Via `astal-notifd` — AGS registra `org.freedesktop.Notifications` no D-Bus
+- Popups flutuantes (TOP+RIGHT, máx 3, auto-dismiss 4s) em `widgets/notifications/`
+- Histórico dentro do Control Center via `NotificationList`
+- Swaync completamente removido
 
 ### 4. OSD
-- Overlay flutuante centralizado (ou inferior)
+- Overlay flutuante centralizado (ou inferior) — a definir
 - Volume: ícone + barra de progresso + percentual
 - Brilho: mesmo padrão
 - Auto-oculta em 2 segundos
@@ -107,8 +108,8 @@ Nenhum componente usa cor hexadecimal direta. **Sempre via variável de tema.**
 
 - ✅ **Repo separado** — `github.com/jonatasbarra/jonpanel`
 - ✅ **Top bar full-width** — sem pill/floating islands
-- ✅ **Notificações via AGS nativo** — não manter Swaync
-- ✅ **Control Center completo** — sliders + toggles + notificações
+- ✅ **Notificações via AGS nativo** — Swaync removido; `AstalNotifd` é o daemon D-Bus
+- ✅ **Control Center completo** — sliders + toggles + notificações em overlay layer-shell
 - ✅ **Múltiplos temas desde o início** — arquitetura SCSS com variáveis por tema
 - ✅ **Tokyo Night como default**
 - ✅ **pnpm** — package manager do projeto
@@ -116,6 +117,7 @@ Nenhum componente usa cor hexadecimal direta. **Sempre via variável de tema.**
 - ✅ **Reatividade via `createBinding` e `createComputed`** — API correta do gnim/AGS v3
 - ✅ **Listas reativas via `<For>`** — não `.as()` retornando JSX diretamente
 - ✅ **SCSS compilado manualmente** com `sass style.scss style.css` — GTK não processa SCSS
+- ✅ **Services como singletons** — `services/controlcenter.ts` com `createState` para visibilidade de janelas
 
 ### Decisões pendentes
 
@@ -124,6 +126,7 @@ Nenhum componente usa cor hexadecimal direta. **Sempre via variável de tema.**
 - 🔲 Animação do Control Center: slide down ou fade + scale?
 - 🔲 Config file: YAML? JSON? Só SCSS?
 - 🔲 Powermenu: diálogo de confirmação antes de executar ações
+- 🔲 Keybind SUPER+N: redirecionar para `ags message toggleCC` (swaync-client removido)
 
 ---
 
@@ -131,11 +134,15 @@ Nenhum componente usa cor hexadecimal direta. **Sempre via variável de tema.**
 
 - `createBinding(obj, "prop")` — reatividade em propriedade GObject
 - `createComputed(() => { ... })` — computed que rastreia múltiplas props reativamente
+- `createState(initial)` — `[getter, setter]` para estado local; getter é reativo e funciona com `<For>`
 - `<For each={accessor}>` — componente para listas reativas (não `.as()` retornando arrays JSX)
+- `GLib.timeout_add(priority, ms, () => false)` — timer one-shot; retornar `false` cancela
+- `notifd.connect("notified", (_, id) => ...)` — sinal para novas notificações; buscar via `notifd.notifications.find(n => n.id === id)`
 - Importar de `"ags"` re-exporta tudo de `"gnim"`
 - SCSS deve ser compilado para CSS antes — `sass style.scss style.css`
 - `ags run arquivo.tsx --gtk 4` — flag obrigatória para GTK4
 - `pkill -9 -f "ags"` — matar instância anterior antes de relancar
+- Symlinks em dotfiles: usar `readlink -f` para resolver antes de editar
 
 ---
 
@@ -150,15 +157,14 @@ Nenhum componente usa cor hexadecimal direta. **Sempre via variável de tema.**
 | Tag | Marco |
 |---|---|
 | `v0.1-bar` | Top bar funcional com todos os módulos |
-| `v0.2-control-center` | Control Center com sliders e toggles |
-| `v0.3-notifications` | Notificações AGS nativas |
-| `v0.4-osd` | OSD de volume e brilho |
+| `v0.2-control-center` | Control Center + notificações AGS nativas (Bloco D completo) |
+| `v0.3-osd` | OSD de volume e brilho |
 | `v1.0-launch` | MVP completo, README com screenshots |
 
 ---
 
 ## Estado atual
 
-**Bloco atual:** Bloco C concluído — módulos da barra implementados
-**Última tag:** nenhuma (commits em `feat/initial`)
-**Próxima etapa:** Bloco D — Control Center e notificações
+**Bloco atual:** Bloco D concluído — Control Center e notificações funcionais
+**Última tag:** `v0.2-control-center`
+**Próxima etapa:** Bloco E — OSD de volume e brilho
