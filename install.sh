@@ -79,7 +79,7 @@ echo ""
 echo "==> Installing JS dependencies..."
 
 cd "$SCRIPT_DIR"
-pnpm install
+pnpm install --prefer-offline
 
 # ── 7. Compile SCSS ───────────────────────────────────────────────────────────
 
