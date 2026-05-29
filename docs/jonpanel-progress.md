@@ -1,6 +1,6 @@
 # JonPanel — Progresso e Log de Sessões
 
-**Status atual:** Bloco F em andamento — F1 e F2 concluídas; próxima: F3 (README)
+**Status atual:** Bloco F em andamento — F1, F2, F3 concluídas; próxima: F4 (CHANGELOG)
 **Última atualização:** 2026-05-29
 
 ---
@@ -62,7 +62,7 @@
 - [x] F1d — Auditoria do fluxo de boot — exec-once corrigido nos dotfiles; decisão de path padrão tomada ($HOME/.local/share/jonpanel/)
 - [x] F2 — `install.sh` criado (Arch only, AUR helper detection, todas as deps, SCSS compile, rsync para destino)
 - [x] F2 — Validar install.sh: passos não-sudo validados diretamente (SCSS, rsync/cp, chmod); sudo steps (pacman/AUR/systemctl) são no-ops pois tudo já instalado/ativo
-- [ ] F3 — README profissional com screenshots
+- [x] F3 — README profissional com screenshots (bar + control center)
 - [ ] F4 — CHANGELOG desde v0.1
 - [ ] F5 — `CONTRIBUTING.md` básico
 - [ ] F6 — Tag `v1.0-launch` e publicação
