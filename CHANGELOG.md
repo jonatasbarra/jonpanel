@@ -4,6 +4,15 @@ All notable changes to JonPanel are documented here.
 
 ---
 
+## [Unreleased]
+
+### Changed
+- Bar polish: rounded corners, floating margins, and a dual-action clock (left click opens calendar, right click opens Control Center)
+- Control Center polish: centered top placement, reduced transparency, compact status chips, single-line quick toggles, and thicker volume/brightness sliders
+- MediaCard remains deferred while MPRIS integration is stabilized
+
+---
+
 ## [v1.0-launch] — 2026-05-29
 
 ### Added

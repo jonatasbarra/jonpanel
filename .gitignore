@@ -3,3 +3,5 @@ node_modules/
 style.css
 style.css.map
 *.css.map
+
+AGENTS.md

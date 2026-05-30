@@ -19,6 +19,15 @@
 
 ---
 
+## Estado atual do branch
+
+- A barra já está com bordas arredondadas, efeito flutuante e clock com interação dupla: clique esquerdo abre o calendário e clique direito abre o Control Center.
+- O Control Center foi centralizado, ficou menos transparente e passou a usar uma faixa de status compacta com chips de Wi-Fi, BT, bateria e DND.
+- Os quick toggles estão em linha única, sem legenda, e os sliders de volume/brilho estão mais grossos e com maior separação vertical.
+- O `MediaCard` foi prototipado e adiado porque ainda estava instável; ele não faz parte do layout ativo agora.
+
+---
+
 ## Stack técnica
 
 | Componente | Escolha | Motivo |
@@ -42,10 +51,12 @@
 - Estilo: full-width, sem margin lateral
 
 ### 2. Control Center ✅
-- Acionado por: clique no clock
-- Overlay layer-shell TOP+RIGHT; visibilidade controlada por `services/controlcenter.ts`
+- Acionado por: clique direito no clock da barra
+- Overlay layer-shell centralizado no topo; visibilidade controlada por `services/controlcenter.ts`
 - Fecha ao clicar fora (focus lost)
-- Seções: VolumeSlider → BrightnessSlider → QuickToggles (WiFi, BT, DND, power profile) → NotificationList
+- Seções: faixa de status compacta → QuickToggles em linha única → VolumeSlider → BrightnessSlider → NotificationList
+- A faixa de status mostra Wi-Fi, BT, bateria e DND sem relógio grande
+- `MediaCard` permanece adiado até a próxima rodada de estabilização
 - Swaync completamente removido
 
 ### 3. Notificações (daemon nativo AGS) ✅
@@ -131,6 +142,7 @@ Nenhum componente usa cor hexadecimal direta. **Sempre via variável de tema.**
 - 🔲 Animação do Control Center: slide down ou fade + scale?
 - 🔲 Config file: YAML? JSON? Só SCSS?
 - 🔲 Powermenu: diálogo de confirmação antes de executar ações
+- 🔲 MediaCard: reintroduzir só depois que a integração MPRIS estiver estável
 
 ---
 
@@ -203,6 +215,6 @@ Isso permite que o Claude CLI execute comandos, edite arquivos e rode `sudo` dir
 
 ## Estado atual
 
-**Bloco atual:** Bloco F concluído — MVP publicado
+**Bloco atual:** Bloco G em andamento — refinamento visual da barra e do Control Center
 **Última tag:** `v1.0-launch`
-**Próxima etapa:** Bloco G — refinamento visual da barra
+**Próxima etapa:** fechar o refinamento visual e preparar a publicação final

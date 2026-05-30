@@ -1,6 +1,6 @@
 # JonPanel — Progresso e Log de Sessões
 
-**Status atual:** Bloco F em andamento — F1, F2, F3 concluídas; próxima: F4 (CHANGELOG)
+**Status atual:** Bloco G em andamento — refinamento visual da barra e do Control Center; F6 (tag/publicação) ainda pendente
 **Última atualização:** 2026-05-29
 
 ---
@@ -67,11 +67,13 @@
 - [x] F5 — `CONTRIBUTING.md` — coberto pelo README (seção Contributing)
 - [ ] F6 — Tag `v1.0-launch` e publicação
 
-### Bloco G — Refinamento visual da barra (planejado)
+### Bloco G — Refinamento visual da barra e do Control Center
 
-- [ ] G1 — Relógio: ajustar proporção hora vs data (hora dominando demais)
-- [ ] G2 — Status icons: aumentar tamanho e peso visual (battery, wifi, bt, volume)
-- [ ] G3 — Harmonia geral: revisar font-size e espaçamento entre módulos do lado direito
+- [x] G1 — Clock: clique esquerdo abre calendário e clique direito abre Control Center
+- [x] G2 — Status chips e ícones: legibilidade aumentada e visual mais coeso
+- [x] G3 — Harmonia geral: revisão de espaçamento, hierarquia visual e densidade do lado direito
+- [ ] G4 — MediaCard: reintroduzir apenas quando a integração MPRIS estiver estável
+- [ ] G5 — Fechamento da publicação final
 
 ---
 
@@ -168,3 +170,15 @@
   - Status icons (battery, wifi, bt, volume) pequenos demais
   - Densidade visual irregular entre lado esquerdo e direito
 - Bloco G planejado para refinamento visual após publicação do MVP
+
+### Sessão 4 — 2026-05-29 — Bloco G (refinamento visual da barra e do Control Center)
+- **Barra:** bordas arredondadas mantidas, lateral/topo com margem para efeito flutuante e clock com interação dupla
+  - clique esquerdo no clock abre o calendário
+  - clique direito no clock abre o Control Center
+- **Control Center:** centralizado no topo, fundo menos transparente, sem relógio grande
+- **Faixa de status:** chips de Wi-Fi, BT, battery e DND centralizados, com fonte maior e mais legível
+- **QuickToggles:** cards em linha única, sem legenda, ícones padronizados e visual mais compacto
+- **Sliders:** volume e brilho com ícones maiores, trilhos mais grossos e melhor separação vertical
+- **Notificações:** título com contagem, empty state mais claro e botão `Clear all`
+- **MediaCard:** prototipado e depois adiado por instabilidade; não faz parte do layout ativo
+- **Workspace hygiene:** `AGENTS.md` deve permanecer fora do versionamento; o `MediaCard` segue adiado até uma nova rodada de estabilização

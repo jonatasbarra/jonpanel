@@ -30,76 +30,12 @@
   padding: 4px 8px;
 }
 
-.media-card {
-  background-color: rgba($surface, 0.8);
-  border: 1px solid $border;
-  border-radius: 12px;
-  padding: 12px;
-  min-width: 0;
-}
-
-.media-card-head {
-  min-width: 0;
-}
-
-.media-card-icon {
-  color: $blue;
-  font-size: 20px;
-  min-width: 20px;
-}
-
-.media-card-text {
-  min-width: 0;
-}
-
-.media-card-title {
-  color: $fg;
-  font-size: 13px;
-  font-weight: bold;
-  min-width: 0;
-}
-
-.media-card-subtitle {
-  color: $fg-muted;
-  font-size: 11px;
-  min-width: 0;
-}
-
-.media-card-controls {
-  min-width: 0;
-}
-
-.media-card-control {
-  background-color: transparent;
-  border: 1px solid transparent;
-  border-radius: 8px;
-  color: $fg;
-  min-width: 32px;
-  min-height: 32px;
-  padding: 0;
-
-  &:hover {
-    background-color: rgba($fg, 0.08);
-    border-color: rgba($fg, 0.12);
-  }
-
-  &.primary {
-    background-color: rgba($blue, 0.16);
-    color: $blue;
-
-    &:hover {
-      background-color: rgba($blue, 0.22);
-      border-color: rgba($blue, 0.3);
-    }
-  }
-}
-
 .volume-slider {
-  padding: 10px 0 4px;
+  padding: 10px 0 6px;
 
   .volume-slider-icon {
     color: $cyan;
-    font-size: 20px;
+    font-size: 26px;
     min-width: 24px;
   }
 
@@ -111,7 +47,7 @@
 
   slider {
     color: $blue;
-    min-height: 18px;
+    min-height: 20px;
   }
 
   trough {
@@ -131,11 +67,11 @@
 }
 
 .brightness-slider {
-  padding: 4px 0 4px;
+  padding: 4px 0 6px;
 
   .brightness-icon {
     color: $yellow;
-    font-size: 20px;
+    font-size: 26px;
     min-width: 24px;
   }
 
@@ -147,7 +83,7 @@
 
   slider {
     color: $blue;
-    min-height: 18px;
+    min-height: 20px;
   }
 
   trough {
@@ -326,25 +262,5 @@
   &:active {
     background-color: transparent;
     box-shadow: none;
-  }
-}
-
-.brightness-slider {
-  padding: 4px 0;
-
-  .brightness-icon {
-    color: $yellow;
-    font-size: 16px;
-    min-width: 20px;
-  }
-
-  .brightness-label {
-    color: $fg-muted;
-    font-size: 12px;
-    min-width: 36px;
-  }
-
-  slider {
-    color: $blue;
   }
 }
