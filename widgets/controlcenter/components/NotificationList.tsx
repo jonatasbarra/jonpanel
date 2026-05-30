@@ -94,7 +94,7 @@ export default function NotificationList() {
                 <box
                   cssClasses={["notif-content"]}
                   orientation={Gtk.Orientation.VERTICAL}
-                  spacing={1}
+                  spacing={3}
                   hexpand={true}
                 >
                   <label
@@ -109,7 +109,8 @@ export default function NotificationList() {
                     label={notif.summary ?? ""}
                     xalign={0}
                     wrap
-                    wrapMode={2}
+                    wrapMode={0}
+                    maxWidthChars={38}
                     hexpand={true}
                   />
                   {notif.body ? (
@@ -118,7 +119,8 @@ export default function NotificationList() {
                       label={notif.body}
                       xalign={0}
                       wrap
-                      wrapMode={2}
+                      wrapMode={0}
+                      maxWidthChars={38}
                       hexpand={true}
                     />
                   ) : null}

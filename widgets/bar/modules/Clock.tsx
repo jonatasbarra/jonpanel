@@ -14,9 +14,21 @@ export default function Clock() {
         propagationPhase={Gtk.PropagationPhase.CAPTURE}
         onPressed={() => toggleCC()}
       />
-      <box spacing={6}>
-        <label cssClasses={["clock-date"]} label={date} />
-        <label cssClasses={["clock-time"]} label={time} />
+      <box spacing={8} halign={Gtk.Align.CENTER} valign={Gtk.Align.CENTER}>
+        <label
+          cssClasses={["clock-date"]}
+          label={date}
+          halign={Gtk.Align.CENTER}
+          valign={Gtk.Align.CENTER}
+          xalign={0.5}
+        />
+        <label
+          cssClasses={["clock-time"]}
+          label={time}
+          halign={Gtk.Align.CENTER}
+          valign={Gtk.Align.CENTER}
+          xalign={0.5}
+        />
       </box>
     </button>
   )

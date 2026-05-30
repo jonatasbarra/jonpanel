@@ -41,7 +41,9 @@
   background-color: rgba($fg, 0.04);
   border: 1px solid $border;
   border-radius: 999px;
-  padding: 0 10px;
+  min-width: 150px;
+  min-height: 30px;
+  padding: 0 12px 1px 16px;
 
   &:hover {
     background-color: rgba($fg, 0.08);
@@ -50,14 +52,16 @@
 
   .clock-time {
     color: $fg;
-    font-size: 14px;
-    font-weight: bold;
+    font-size: 16px;
+    font-weight: 900;
+    letter-spacing: 0.01em;
   }
 
   .clock-date {
-    color: $fg;
-    font-size: 14px;
-    font-weight: bold;
+    color: rgba($fg, 0.82);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.01em;
   }
 }
 
@@ -107,10 +111,12 @@
 
 .battery {
   @include icon-button;
+  min-height: 30px;
+  padding: 0 5px;
 
   .battery-icon {
     color: $fg;
-    font-size: 20px;
+    font-size: 23px;
 
     &.charging { color: $green; }
     &.low      { color: $red; }
@@ -119,10 +125,12 @@
 
 .network {
   @include icon-button;
+  min-height: 30px;
+  padding: 0 5px;
 
   .network-icon {
     color: $blue;
-    font-size: 20px;
+    font-size: 23px;
 
     &.disconnected { color: $fg-muted; }
   }
@@ -130,7 +138,9 @@
 
 .bluetooth {
   @include icon-button;
-  font-size: 20px;
+  min-height: 30px;
+  padding: 0 5px;
+  font-size: 23px;
 
   &.enabled  { color: $blue; }
   &.disabled { color: $fg-muted; }
@@ -138,23 +148,25 @@
 
 .media {
   @include icon-button;
+  min-height: 30px;
+  padding: 0 5px;
 
   .media-icon {
     color: $purple;
-    font-size: 26px;
+    font-size: 29px;
   }
 }
 
 .volume {
   @include icon-button;
-  font-size: 26px;
-  min-width: 36px;
-  min-height: 26px;
-  padding: 0 4px;
+  font-size: 29px;
+  min-width: 38px;
+  min-height: 30px;
+  padding: 0 5px;
 
   .volume-icon {
     color: $cyan;
-    font-size: 26px;
+    font-size: 29px;
 
     &.muted { color: $fg-muted; }
   }
@@ -186,13 +198,19 @@
 .powermenu {
   @include icon-button;
   color: $red;
-  font-size: 20px;
-  padding: 0 10px;
+  font-size: 23px;
+  min-height: 30px;
+  min-width: 34px;
+  padding: 0 8px;
   transition: background-color 120ms ease, border-color 120ms ease, color 120ms ease;
 
   &:hover {
     background-color: rgba($red, 0.12);
     border: 1px solid rgba($red, 0.34);
     border-radius: 8px;
+  }
+
+  label {
+    margin-top: 0;
   }
 }
