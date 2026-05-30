@@ -5,7 +5,8 @@ import { Gtk } from "ags/gtk4"
 import Network from "gi://AstalNetwork"
 import Bluetooth from "gi://AstalBluetooth"
 
-// DND singleton — exported for use in future notification integration
+// Local DND state — keeps the control center stable even if the notification
+// daemon proxy does not expose a writable dnd property in this runtime.
 const [dnd, setDnd] = createState(false)
 export const getDND = dnd
 
@@ -48,78 +49,57 @@ export default function QuickToggles() {
   return (
     <box
       cssClasses={["quick-toggles"]}
-      orientation={Gtk.Orientation.VERTICAL}
-      spacing={8}
+      spacing={4}
     >
-      <box spacing={8} homogeneous>
-        {/* WiFi */}
-        <button
-          cssClasses={["qt-toggle"]}
-          hexpand
-          onClicked={() => { if (wifi) wifi.enabled = !wifi.enabled }}
-        >
-          <box orientation={Gtk.Orientation.VERTICAL} spacing={4}>
-            <label
-              cssClasses={createComputed(() =>
-                wifiOn() ? ["qt-icon", "active"] : ["qt-icon"]
-              )}
-              label={createComputed(() => (wifiOn() ? "󰤨" : "󰤭"))}
-            />
-            <label cssClasses={["qt-label"]} label="WiFi" />
-          </box>
-        </button>
+      <button
+        cssClasses={["qt-toggle"]}
+        hexpand
+        onClicked={() => { if (wifi) wifi.enabled = !wifi.enabled }}
+      >
+        <label
+          cssClasses={createComputed(() =>
+            wifiOn() ? ["qt-icon", "active"] : ["qt-icon"]
+          )}
+          label={createComputed(() => (wifiOn() ? "󰤨" : "󰤭"))}
+        />
+      </button>
 
-        {/* Bluetooth */}
-        <button
-          cssClasses={["qt-toggle"]}
-          hexpand
-          onClicked={() => bluetooth.toggle()}
-        >
-          <box orientation={Gtk.Orientation.VERTICAL} spacing={4}>
-            <label
-              cssClasses={btOn.as((e: boolean) =>
-                e ? ["qt-icon", "active"] : ["qt-icon"]
-              )}
-              label={btOn.as((e: boolean) => (e ? "󰂯" : "󰂲"))}
-            />
-            <label cssClasses={["qt-label"]} label="Bluetooth" />
-          </box>
-        </button>
-      </box>
+      <button
+        cssClasses={["qt-toggle"]}
+        hexpand
+        onClicked={() => bluetooth.toggle()}
+      >
+        <label
+          cssClasses={btOn.as((e: boolean) =>
+            e ? ["qt-icon", "active"] : ["qt-icon"]
+          )}
+          label={btOn.as((e: boolean) => (e ? "󰂯" : "󰂲"))}
+        />
+      </button>
 
-      <box spacing={8} homogeneous>
-        {/* Do Not Disturb */}
-        <button
-          cssClasses={["qt-toggle"]}
-          hexpand
-          onClicked={() => setDnd(!dnd())}
-        >
-          <box orientation={Gtk.Orientation.VERTICAL} spacing={4}>
-            <label
-              cssClasses={createComputed(() =>
-                dnd() ? ["qt-icon", "active"] : ["qt-icon"]
-              )}
-              label={createComputed(() => (dnd() ? "󰂛" : "󰂚"))}
-            />
-            <label cssClasses={["qt-label"]} label="Do Not Disturb" />
-          </box>
-        </button>
+      <button
+        cssClasses={["qt-toggle"]}
+        hexpand
+        onClicked={() => setDnd(!dnd())}
+      >
+        <label
+          cssClasses={createComputed(() =>
+            dnd() ? ["qt-icon", "active"] : ["qt-icon"]
+          )}
+          label={createComputed(() => (dnd() ? "󰂛" : "󰂚"))}
+        />
+      </button>
 
-        {/* Power Profile */}
-        <button
-          cssClasses={["qt-toggle"]}
-          hexpand
-          onClicked={cycleProfile}
-        >
-          <box orientation={Gtk.Orientation.VERTICAL} spacing={4}>
-            <label
-              cssClasses={["qt-icon", "active"]}
-              label={createComputed(() => PROFILE_ICONS[profile()] ?? "󰾆")}
-            />
-            <label cssClasses={["qt-label"]} label={profileLabel} />
-          </box>
-        </button>
-      </box>
+      <button
+        cssClasses={["qt-toggle"]}
+        hexpand
+        onClicked={cycleProfile}
+      >
+        <label
+          cssClasses={["qt-icon", "active"]}
+          label={createComputed(() => PROFILE_ICONS[profile()] ?? "󰾆")}
+        />
+      </button>
     </box>
   )
 }

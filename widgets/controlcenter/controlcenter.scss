@@ -5,20 +5,102 @@
 }
 
 .cc-container {
-  background-color: $blur-bg;
+  background-color: rgba($bg, 0.96);
   border: 1px solid $border;
   border-radius: 12px;
   padding: 16px;
   margin: 8px;
 }
 
+.cc-header {
+  padding: 0 0 10px;
+  border-bottom: 1px solid rgba($fg, 0.08);
+}
+
+.cc-status-row {
+  min-width: 0;
+}
+
+.cc-status-chip {
+  background-color: rgba($surface, 0.72);
+  border: 1px solid rgba($fg, 0.14);
+  border-radius: 999px;
+  color: $fg;
+  font-size: 12px;
+  padding: 4px 8px;
+}
+
+.media-card {
+  background-color: rgba($surface, 0.8);
+  border: 1px solid $border;
+  border-radius: 12px;
+  padding: 12px;
+  min-width: 0;
+}
+
+.media-card-head {
+  min-width: 0;
+}
+
+.media-card-icon {
+  color: $blue;
+  font-size: 20px;
+  min-width: 20px;
+}
+
+.media-card-text {
+  min-width: 0;
+}
+
+.media-card-title {
+  color: $fg;
+  font-size: 13px;
+  font-weight: bold;
+  min-width: 0;
+}
+
+.media-card-subtitle {
+  color: $fg-muted;
+  font-size: 11px;
+  min-width: 0;
+}
+
+.media-card-controls {
+  min-width: 0;
+}
+
+.media-card-control {
+  background-color: transparent;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  color: $fg;
+  min-width: 32px;
+  min-height: 32px;
+  padding: 0;
+
+  &:hover {
+    background-color: rgba($fg, 0.08);
+    border-color: rgba($fg, 0.12);
+  }
+
+  &.primary {
+    background-color: rgba($blue, 0.16);
+    color: $blue;
+
+    &:hover {
+      background-color: rgba($blue, 0.22);
+      border-color: rgba($blue, 0.3);
+    }
+  }
+}
+
 .volume-slider {
-  padding: 4px 0;
+  padding: 10px 0 4px;
 
   .volume-slider-icon {
     color: $cyan;
-    font-size: 16px;
-    min-width: 20px;
+    font-size: 20px;
+    min-width: 24px;
   }
 
   .volume-slider-label {
@@ -29,17 +111,71 @@
 
   slider {
     color: $blue;
+    min-height: 18px;
+  }
+
+  trough {
+    min-height: 6px;
+    border-radius: 999px;
+  }
+
+  highlight {
+    min-height: 6px;
+    border-radius: 999px;
+  }
+
+  slider trough,
+  slider highlight {
+    min-height: 6px;
+  }
+}
+
+.brightness-slider {
+  padding: 4px 0 4px;
+
+  .brightness-icon {
+    color: $yellow;
+    font-size: 20px;
+    min-width: 24px;
+  }
+
+  .brightness-label {
+    color: $fg-muted;
+    font-size: 12px;
+    min-width: 36px;
+  }
+
+  slider {
+    color: $blue;
+    min-height: 18px;
+  }
+
+  trough {
+    min-height: 6px;
+    border-radius: 999px;
+  }
+
+  highlight {
+    min-height: 6px;
+    border-radius: 999px;
+  }
+
+  slider trough,
+  slider highlight {
+    min-height: 6px;
   }
 }
 
 .quick-toggles {
-  padding: 4px 0;
+  padding: 6px 0 12px;
 
   .qt-toggle {
     background-color: $surface;
     border: 1px solid transparent;
     border-radius: 10px;
-    padding: 12px 8px;
+    min-height: 44px;
+    padding: 0;
+    min-width: 0;
 
     &:hover {
       border-color: $border;
@@ -51,22 +187,43 @@
   }
 
   .qt-icon {
-    font-size: 20px;
-    color: $fg-muted;
+    font-size: 24px;
+    color: $fg;
 
     &.active {
       color: $blue;
     }
   }
-
-  .qt-label {
-    font-size: 11px;
-    color: $fg-muted;
-  }
 }
 
 .notif-list {
   padding: 4px 0;
+}
+
+.notif-list-head {
+  min-width: 0;
+}
+
+.notif-list-title {
+  color: $fg-muted;
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.notif-clear {
+  background-color: transparent;
+  border: 1px solid rgba($fg, 0.08);
+  border-radius: 999px;
+  color: $fg-muted;
+  font-size: 11px;
+  padding: 4px 8px;
+
+  &:hover {
+    background-color: rgba($fg, 0.08);
+    color: $fg;
+  }
 }
 
 .notif-dnd,
@@ -78,6 +235,12 @@
   .notif-empty-icon {
     font-size: 28px;
     color: $fg-muted;
+  }
+
+  .notif-empty-title {
+    color: $fg;
+    font-size: 12px;
+    font-weight: bold;
   }
 
   .notif-dnd-label,
@@ -96,17 +259,17 @@
   background-color: $surface;
   border: 1px solid $border;
   border-radius: 8px;
-  padding: 10px;
+  padding: 8px;
   min-width: 0;
 
   .notif-app-icon {
-    min-width: 24px;
-    min-height: 24px;
+    min-width: 20px;
+    min-height: 20px;
     color: $blue;
   }
 
   .notif-icon-fallback {
-    font-size: 20px;
+    font-size: 18px;
   }
 
   // Inner content box — must have min-width: 0 to allow labels to wrap
@@ -121,14 +284,14 @@
   }
 
   .notif-summary {
-    font-size: 13px;
+    font-size: 12px;
     color: $fg;
     font-weight: bold;
     min-width: 0;
   }
 
   .notif-body {
-    font-size: 12px;
+    font-size: 11px;
     color: $fg-muted;
     min-width: 0;
   }
@@ -137,9 +300,9 @@
     background-color: transparent;
     border: none;
     border-radius: 4px;
-    padding: 2px 4px;
+    padding: 1px 3px;
     color: $fg-muted;
-    font-size: 14px;
+    font-size: 13px;
     min-width: 0;
 
     &:hover {

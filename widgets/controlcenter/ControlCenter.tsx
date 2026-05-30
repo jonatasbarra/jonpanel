@@ -5,6 +5,7 @@ import VolumeSlider from "./components/VolumeSlider"
 import BrightnessSlider from "./components/BrightnessSlider"
 import QuickToggles from "./components/QuickToggles"
 import NotificationList from "./components/NotificationList"
+import Header from "./components/Header"
 
 export default function ControlCenter() {
   const { TOP, RIGHT, BOTTOM, LEFT } = Astal.WindowAnchor
@@ -36,7 +37,7 @@ export default function ControlCenter() {
     <window
       name="control-center"
       cssClasses={["control-center"]}
-      anchor={TOP | RIGHT}
+      anchor={TOP}
       layer={Astal.Layer.OVERLAY}
       exclusivity={Astal.Exclusivity.NORMAL}
       keymode={Astal.Keymode.ON_DEMAND}
@@ -48,9 +49,10 @@ export default function ControlCenter() {
         cssClasses={["cc-container"]}
         widthRequest={380}
       >
+        <Header />
+        <QuickToggles />
         <VolumeSlider />
         <BrightnessSlider />
-        <QuickToggles />
         <NotificationList />
       </box>
     </window>

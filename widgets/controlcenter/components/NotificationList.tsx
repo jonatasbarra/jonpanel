@@ -8,43 +8,63 @@ export default function NotificationList() {
   const notifications = createBinding(notifd, "notifications")
 
   const isEmpty = createComputed(() => notifications().length === 0)
-  const dndActive = createComputed(() => getDND())
+  const count = createComputed(() => notifications().length)
   const overflows = createComputed(() => notifications().length > 10)
+  const dnd = createComputed(() => getDND())
 
   return (
     <box cssClasses={["notif-list"]} orientation={Gtk.Orientation.VERTICAL} spacing={6}>
-      {/* DND banner */}
+      <box cssClasses={["notif-list-head"]} spacing={6} halign={Gtk.Align.FILL}>
+        <label
+          cssClasses={["notif-list-title"]}
+          label={createComputed(() => `Notifications (${count()})`)}
+          hexpand
+          xalign={0}
+        />
+        <button
+          cssClasses={["notif-clear"]}
+          visible={createComputed(() => !isEmpty())}
+          onClicked={() => notifd.clear()}
+          label="Clear all"
+        />
+      </box>
+
       <box
         cssClasses={["notif-dnd"]}
         orientation={Gtk.Orientation.VERTICAL}
         spacing={6}
-        visible={dndActive}
+        visible={dnd}
         halign={Gtk.Align.CENTER}
       >
         <label cssClasses={["notif-dnd-icon"]} label="󰂛" />
         <label cssClasses={["notif-dnd-label"]} label="Do Not Disturb ativo" />
       </box>
 
-      {/* Empty state */}
       <box
         cssClasses={["notif-empty"]}
         orientation={Gtk.Orientation.VERTICAL}
         spacing={6}
         halign={Gtk.Align.CENTER}
-        visible={createComputed(() => !dndActive() && isEmpty())}
+        visible={createComputed(() => !dnd() && isEmpty())}
       >
         <label cssClasses={["notif-empty-icon"]} label="󰂚" />
-        <label cssClasses={["notif-empty-label"]} label="Sem notificações" />
+        <label cssClasses={["notif-empty-title"]} label="All caught up" />
+        <label
+          cssClasses={["notif-empty-label"]}
+          label="New notifications will appear here."
+          wrap
+          justify={Gtk.Justification.CENTER}
+          xalign={0.5}
+        />
       </box>
 
-      {/* Notification cards */}
       <scrolledwindow
         cssClasses={["notif-scroll"]}
-        visible={createComputed(() => !dndActive() && !isEmpty())}
-        vscrollbarPolicy={createComputed(() => overflows() ? Gtk.PolicyType.AUTOMATIC : Gtk.PolicyType.NEVER)}
+        visible={createComputed(() => !dnd() && !isEmpty())}
+        vscrollbarPolicy={createComputed(() => (overflows() ? Gtk.PolicyType.AUTOMATIC : Gtk.PolicyType.NEVER))}
         hscrollbarPolicy={Gtk.PolicyType.NEVER}
         propagateNaturalHeight={createComputed(() => !overflows())}
-        maxContentHeight={createComputed(() => overflows() ? 500 : -1)}
+        maxContentHeight={createComputed(() => (overflows() ? 500 : -1))}
         hexpand={true}
       >
         <box orientation={Gtk.Orientation.VERTICAL} spacing={6} hexpand={true}>
@@ -74,7 +94,7 @@ export default function NotificationList() {
                 <box
                   cssClasses={["notif-content"]}
                   orientation={Gtk.Orientation.VERTICAL}
-                  spacing={2}
+                  spacing={1}
                   hexpand={true}
                 >
                   <label
