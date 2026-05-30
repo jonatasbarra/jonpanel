@@ -50,7 +50,7 @@
 
 .active-window {
   color: $fg-muted;
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .workspaces {
@@ -116,16 +116,20 @@
 
   .media-icon {
     color: $purple;
-    font-size: 20px;
+    font-size: 26px;
   }
 }
 
 .volume {
   @include icon-button;
+  font-size: 30px;
+  min-width: 34px;
+  min-height: 30px;
+  padding: 0 4px;
 
   .volume-icon {
     color: $cyan;
-    font-size: 20px;
+    font-size: 30px;
 
     &.muted { color: $fg-muted; }
   }

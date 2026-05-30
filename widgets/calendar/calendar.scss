@@ -11,13 +11,14 @@
   border: 1px solid $border;
   border-radius: 12px;
   margin-top: 4px;
+  min-width: 320px;
 
   // GTK4 Calendar widget nodes
   calendar.cal {
     background-color: transparent;
     color: $fg;
     border: none;
-    padding: 8px;
+    padding: 12px;
 
     // Month/year header row
     header {
@@ -52,9 +53,9 @@
       border: none;
       border-radius: 50%;
       color: $fg;
-      font-size: 12px;
-      min-width: 28px;
-      min-height: 28px;
+      font-size: 13px;
+      min-width: 34px;
+      min-height: 34px;
 
       &:hover {
         background-color: rgba($fg, 0.08);
@@ -83,8 +84,8 @@
   // Events section below the calendar
   .cal-events {
     border-top: 1px solid $border;
-    padding: 12px 16px;
-    min-width: 260px;
+    padding: 14px 18px;
+    min-width: 320px;
 
     .cal-events-header {
       color: $fg-muted;
