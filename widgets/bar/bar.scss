@@ -6,6 +6,7 @@
   border: none;
   border-radius: 6px;
   padding: 0 6px;
+  transition: background-color 120ms ease, border-color 120ms ease, color 120ms ease;
 
   &:hover {
     background-color: rgba($fg, 0.08);
@@ -15,6 +16,8 @@
 .bar {
   background-color: $blur-bg;
   border-bottom: 1px solid $border;
+  border-radius: 12px;
+  margin: 2px 6px 0;
   padding: 0 8px;
   font-family: "JetBrainsMono Nerd Font";
   font-size: 13px;
@@ -27,12 +30,22 @@
   padding: 0 4px;
 }
 
+.bar button:focus,
+.bar button:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+
 .clock {
   @include icon-button;
+  background-color: rgba($fg, 0.04);
+  border: 1px solid $border;
+  border-radius: 999px;
   padding: 0 10px;
 
   &:hover {
     background-color: rgba($fg, 0.08);
+    border-color: rgba($fg, 0.42);
   }
 
   .clock-time {
@@ -49,8 +62,12 @@
 }
 
 .active-window {
+  background-color: rgba($fg, 0.03);
+  border: 1px solid rgba($fg, 0.08);
+  border-radius: 999px;
   color: $fg-muted;
-  font-size: 14px;
+  font-size: 13px;
+  padding: 0 10px;
 }
 
 .workspaces {
@@ -59,7 +76,13 @@
   .workspace {
     background-color: transparent;
     border: none;
-    padding: 2px 4px;
+    border-radius: 999px;
+    padding: 2px 5px;
+    transition: background-color 120ms ease;
+
+    &:hover {
+      background-color: rgba($fg, 0.05);
+    }
 
     &:hover .workspace-dot {
       background-color: rgba($fg, 0.55);
@@ -70,11 +93,13 @@
       min-height: 8px;
       border-radius: 50%;
       background-color: rgba($fg, 0.25);
+      transition: background-color 120ms ease, border-color 120ms ease;
 
       &.active {
-        background-color: $blue;
+        background-color: rgba($blue, 0.28);
+        border: 1px solid rgba($blue, 0.55);
         min-width: 20px;
-        border-radius: 4px;
+        border-radius: 999px;
       }
     }
   }
@@ -122,14 +147,14 @@
 
 .volume {
   @include icon-button;
-  font-size: 30px;
-  min-width: 34px;
-  min-height: 30px;
+  font-size: 26px;
+  min-width: 36px;
+  min-height: 26px;
   padding: 0 4px;
 
   .volume-icon {
     color: $cyan;
-    font-size: 30px;
+    font-size: 26px;
 
     &.muted { color: $fg-muted; }
   }
@@ -141,12 +166,19 @@
   .tray-item {
     background-color: transparent;
     border: none;
-    border-radius: 4px;
-    padding: 2px 4px;
+    border-radius: 6px;
+    padding: 3px 5px;
     min-width: 0;
+    transition: background-color 120ms ease, transform 120ms ease;
 
     &:hover {
-      background-color: rgba($fg, 0.08);
+      background-color: rgba($fg, 0.06);
+      transform: translateY(-1px);
+    }
+
+    image {
+      min-width: 16px;
+      min-height: 16px;
     }
   }
 }
@@ -155,8 +187,12 @@
   @include icon-button;
   color: $red;
   font-size: 20px;
+  padding: 0 10px;
+  transition: background-color 120ms ease, border-color 120ms ease, color 120ms ease;
 
   &:hover {
-    background-color: rgba($red, 0.15);
+    background-color: rgba($red, 0.12);
+    border: 1px solid rgba($red, 0.34);
+    border-radius: 8px;
   }
 }

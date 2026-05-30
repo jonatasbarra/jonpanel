@@ -25,7 +25,7 @@ const Center = () => (
 )
 
 const Right = () => (
-  <box cssClasses={["bar-right"]} halign={Gtk.Align.END} hexpand spacing={4}>
+  <box cssClasses={["bar-right"]} halign={Gtk.Align.END} hexpand spacing={2}>
     <Tray />
     <Media />
     <BluetoothModule />
